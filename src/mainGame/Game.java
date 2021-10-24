@@ -13,7 +13,11 @@ public class Game extends Application{
 	Stage window;
 	Scene startScreen, settingsMenu, shop, game;
 	
-		
+	private Parent createGame() {
+		Pane gamePane = new Pane();
+		gamePane.setPrefSize(1400, 700);
+		return gamePane;
+	}
 	public void start(Stage stage) throws Exception {
 		window = stage;
 		window.setTitle("Community Service");
@@ -25,8 +29,10 @@ public class Game extends Application{
 		Button startButton = new Button("Start");
 		startButton.setLayoutX(width/2 - 10);
 		startButton.setLayoutY(height/2);
+		startButton.setOnAction(e -> window.setScene(game));
 		root.getChildren().addAll(title, startButton);
 		startScreen = new Scene(root);
+		game = new Scene(createGame());
 		window.setScene(startScreen);
 		window.show();
 	}
