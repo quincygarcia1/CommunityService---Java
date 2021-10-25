@@ -21,6 +21,7 @@ public class Game extends Application{
 	public void start(Stage stage) throws Exception {
 		window = stage;
 		window.setTitle("Community Service");
+		
 		Pane root = new Pane();
 		int width = 700;
 		int height = 500;
@@ -31,6 +32,7 @@ public class Game extends Application{
 		startButton.setLayoutY(height/2);
 		startButton.setOnAction(e -> window.setScene(game));
 		root.getChildren().addAll(title, startButton);
+		
 		startScreen = new Scene(root);
 		game = new Scene(createGame());
 		window.setScene(startScreen);
