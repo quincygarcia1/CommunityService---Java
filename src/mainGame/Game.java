@@ -1,6 +1,7 @@
 package mainGame;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,33 +11,42 @@ import javafx.stage.Stage;
 
 public class Game extends Application{
 	
-	Stage window;
-	Scene startScreen, settingsMenu, shop, game;
+	Pane startScreen;
+	Pane gameScreen;
+	Pane storeScreen;
+	Scene startScene;
+	Scene gameScene;
 	
-	private Parent createGame() {
-		Pane gamePane = new Pane();
-		gamePane.setPrefSize(1400, 700);
-		return gamePane;
+	
+	private void createStart(Stage stage) {
+		Label title = new Label("Community Service");
+		startScreen.getChildren().addAll(title);
 	}
+	
 	public void start(Stage stage) throws Exception {
-		window = stage;
-		window.setTitle("Community Service");
+		stage.setTitle("Community Service");
 		
-		Pane root = new Pane();
-		int width = 700;
-		int height = 500;
-		root.setPrefSize(width, height);
-		Label title = new Label(String.valueOf(root.getLayoutX()));
+		startScreen = new Pane();
+		gameScreen = new Pane();
+		storeScreen = new Pane();
+		
+		createStart(stage);
+		startScene = new Scene(startScreen, 700, 500);
+		gameScene = new Scene(gameScreen, 1400, 700);
+		
 		Button startButton = new Button("Start");
-		startButton.setLayoutX(width/2 - 10);
-		startButton.setLayoutY(height/2);
-		startButton.setOnAction(e -> window.setScene(game));
-		root.getChildren().addAll(title, startButton);
+		startButton.setLayoutX(440);
+		startButton.setLayoutY(240);
+		startButton.setUserData("start");
+		startButton.addEventHandler(ActionEvent.ACTION, (e) -> {
+			stage.setScene(gameScene);
+			stage.centerOnScreen();
+		});
+		startScreen.getChildren().add(startButton);
+
+		stage.setScene(startScene);
+		stage.show();
 		
-		startScreen = new Scene(root);
-		game = new Scene(createGame());
-		window.setScene(startScreen);
-		window.show();
 	}
 	
 	
