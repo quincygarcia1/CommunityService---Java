@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Game extends Application{
@@ -23,6 +24,17 @@ public class Game extends Application{
 		startScreen.getChildren().addAll(title);
 	}
 	
+	private Button createButton(String innerText, double x, double y, int w, int h) {
+		Button btn = new Button(innerText);
+		btn.setLayoutX(x);
+		btn.setLayoutY(y);
+		btn.setMaxSize(w, h);
+		Font btnFont = Font.loadFont("file:ZenKurenaido-Regular.ttf", 20);
+		btn.setFont(btnFont);
+		btn.setStyle("-fx-background-color: #ff0000; ");
+		return btn;
+	}
+	
 	public void start(Stage stage) throws Exception {
 		stage.setTitle("Community Service");
 		
@@ -34,10 +46,7 @@ public class Game extends Application{
 		startScene = new Scene(startScreen, 700, 500);
 		gameScene = new Scene(gameScreen, 1400, 700);
 		
-		Button startButton = new Button("Start");
-		startButton.setLayoutX(440);
-		startButton.setLayoutY(240);
-		startButton.setUserData("start");
+		Button startButton = createButton("Start", 300, 235, 100, 30);
 		startButton.addEventHandler(ActionEvent.ACTION, (e) -> {
 			stage.setScene(gameScene);
 			stage.centerOnScreen();
