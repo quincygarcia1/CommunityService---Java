@@ -6,24 +6,19 @@ import javafx.scene.layout.Pane;
 
 public class Sprite {
 	
-	private double x;
-	private double y;
+	public double x;
+	public double y;
 	private Image image;
-	private ImageView imageView;
 	private double width;
 	private double height;
-	Pane layer;
 
-	public Sprite(Pane layer, Image image, double x, double y) {
+	public Sprite(Image image, double x, double y) {
 		// TODO Auto-generated constructor stub
 		this.image = image;
 		this.x = x;
 		this.y = y;
-		this.imageView = new ImageView(image);
 		this.width = image.getWidth();
 		this.height = image.getHeight();
-		this.layer = layer;
-		addToLayer();
 		
 	}
 	
@@ -35,16 +30,8 @@ public class Sprite {
 		return this.y;
 	}
 	
-	public void addToLayer() {
-		this.layer.getChildren().add(this.imageView);
-	}
-	
-	public Pane getLayer() {
-		return this.layer;
-	}
-	
-	public ImageView getImageView() {
-		return this.imageView;
+	public Image getImage() {
+		return this.image;
 	}
 	
 	public double getW() {
