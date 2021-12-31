@@ -1,11 +1,14 @@
 package mainGame;
 
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class cleanUpPlayers extends Sprite implements Move {
 
-	public cleanUpPlayers(Image image, double x, double y) {
-		super(image, x, y);
+	public cleanUpPlayers(ImageView imageView, ArrayList<Image> spriteImages, double x, double y) {
+		super(imageView, spriteImages, x, y);
 	}
 
 	@Override
@@ -14,11 +17,6 @@ public class cleanUpPlayers extends Sprite implements Move {
 		return this.x;
 	}
 
-	@Override
-	public void moveTo(int location) {
-		// TODO Auto-generated method stub
-		this.x = location;
-	}
 	
 	public double distanceBetween(Sprite piece) {
 		if (piece.y == this.y) {

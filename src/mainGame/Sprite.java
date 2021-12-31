@@ -1,5 +1,7 @@
 package mainGame;
 
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -8,17 +10,19 @@ public class Sprite {
 	
 	public double x;
 	public double y;
-	private Image image;
+	private ImageView imageView;
+	private ArrayList<Image> spriteImages;
 	private double width;
 	private double height;
 
-	public Sprite(Image image, double x, double y) {
+	public Sprite(ImageView imageView, ArrayList<Image> spriteImages, double x, double y) {
 		// TODO Auto-generated constructor stub
-		this.image = image;
+		this.imageView = imageView;
 		this.x = x;
 		this.y = y;
-		this.width = image.getWidth();
-		this.height = image.getHeight();
+		this.setImage(spriteImages.get(0));
+		this.width = imageView.getImage().getWidth();
+		this.height = imageView.getImage().getHeight();
 		
 	}
 	
@@ -31,7 +35,11 @@ public class Sprite {
 	}
 	
 	public Image getImage() {
-		return this.image;
+		return this.imageView.getImage();
+	}
+	
+	public void setImage(Image image) {
+		this.imageView.setImage(image);
 	}
 	
 	public double getW() {
