@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 public class Drone extends cleanUpPlayers {
 	
 	ArrayList<Image> spriteImages = new ArrayList<Image>();
-	int currentAnimationNum = 2;
+	int currentAnimationNum = 0;
 	
 	public Drone(ImageView imageView, double x) {
 		
@@ -20,18 +20,34 @@ public class Drone extends cleanUpPlayers {
 	}
 	
 	public void moveTo(double location) throws InterruptedException {
-		currentAnimationNum = 2;
+		if (location < this.x) {
+			currentAnimationNum = 3;
+			changeAnimation();
+		}
 		while (Math.abs(this.x - location) <= 50) {
 			if (location < this.x) {
 				this.x -= 5;
+				if (currentAnimationNum == 5) {
+					currentAnimationNum = 3;
+				} else {
+					currentAnimationNum ++;
+				}
 			} else {
 				this.x += 5;
+				if (currentAnimationNum == 2) {
+					currentAnimationNum = 0;
+				} else {
+					currentAnimationNum ++;
+				}
 			}
+			changeAnimation();
 			Thread.sleep(25);
 		}
+		currentAnimationNum = 0;
+		changeAnimation();
 	}
 	
-	private void changeAnimation(Boolean movingRight) {
-		
+	private void changeAnimation() {
+		this.setImage(this.spriteImages.get(currentAnimationNum));
 	}
 }
