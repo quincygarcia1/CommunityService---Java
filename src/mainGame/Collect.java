@@ -2,6 +2,6 @@ package mainGame;
 
 public interface Collect {
 	
-	public void pickUp(garbageItem item);
+	public void pickUp(Collectable item);
 	
 }

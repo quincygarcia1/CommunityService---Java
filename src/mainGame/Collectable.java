@@ -9,8 +9,8 @@ public abstract class Collectable extends Sprite {
 
 	private int hp;
 	
-	public Collectable(ImageView imageView, ArrayList<Image> spriteImages, double x, double y, int hp) {
-		super(imageView, spriteImages, x, y);
+	public Collectable(ArrayList<Image> spriteImages, double x, double y, int hp) {
+		super(spriteImages, x, y);
 		this.hp = hp;
 	}
 	
@@ -20,6 +20,10 @@ public abstract class Collectable extends Sprite {
 	
 	public void setHP(int newHP) {
 		this.hp = newHP;
+	}
+	
+	public void remove() {
+		this.setImage(null);
 	}
 	
 }

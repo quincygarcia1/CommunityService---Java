@@ -7,11 +7,13 @@ public class App extends Application {
 	
 	Model model;
 	GameView view;
+	public int GAMEW = 1000;
+	public int GAMEH = 700;
 	
 	public void start(Stage stage) {
 		stage.setTitle("Community Service");
-		stage.setMinHeight(700);
-		stage.setMinWidth(1000);
+		stage.setMinHeight(GAMEH);
+		stage.setMinWidth(GAMEW);
 		
 		this.model = new Model();
 		this.view = new GameView(stage, model);

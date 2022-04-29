@@ -6,9 +6,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class cleanUpPlayers extends Sprite implements Move {
+	
+	private double destructionRange;
 
-	public cleanUpPlayers(ImageView imageView, ArrayList<Image> spriteImages, double x, double y) {
-		super(imageView, spriteImages, x, y);
+	public cleanUpPlayers(ArrayList<Image> spriteImages, double x, double y, double destructionRange) {
+		super(spriteImages, x, y);
+		this.destructionRange = destructionRange;
 	}
 
 	@Override
@@ -17,6 +20,13 @@ public class cleanUpPlayers extends Sprite implements Move {
 		return this.x;
 	}
 
+	public void setDestructionRange(double newRange) {
+		this.destructionRange = newRange;
+	}
+	
+	public double getDestructionRange() {
+		return this.destructionRange;
+	}
 	
 	public double distanceBetween(Sprite piece) {
 		if (piece.y == this.y) {
@@ -24,8 +34,22 @@ public class cleanUpPlayers extends Sprite implements Move {
 		} else {
 			double yDist = Math.abs(piece.y - this.y);
 			double xDist = Math.abs(piece.x - this.x);
-			return (Math.pow(xDist, 2)) + (Math.pow(yDist, 2));
+			yDist -= this.getH();
+			xDist -= this.getW();
+ 			return Math.sqrt(Math.pow(xDist, 2)) + (Math.pow(yDist, 2));
 		}
+	}
+	
+	public void moveTo(double location) throws InterruptedException {
+		this.x += location;
+		
+	}
+	
+	public boolean touches(Sprite otherObject) {
+		if (distanceBetween(otherObject) <= this.destructionRange) {
+			return true;
+		}
+		return false;
 	}
 	
 }
