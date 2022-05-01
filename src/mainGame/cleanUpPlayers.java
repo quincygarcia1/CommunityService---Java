@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class cleanUpPlayers extends Sprite implements Move {
+public abstract class cleanUpPlayers extends Sprite implements Move, Runnable{
 	
 	private double destructionRange;
+	protected int currentAnimationNum = 0;
 
 	public cleanUpPlayers(ArrayList<Image> spriteImages, double x, double y, double destructionRange) {
 		super(spriteImages, x, y);
@@ -42,7 +43,6 @@ public class cleanUpPlayers extends Sprite implements Move {
 	
 	public void moveTo(double location) throws InterruptedException {
 		this.x += location;
-		
 	}
 	
 	public boolean touches(Sprite otherObject) {
@@ -51,5 +51,8 @@ public class cleanUpPlayers extends Sprite implements Move {
 		}
 		return false;
 	}
+
+	@Override
+	public abstract void run();
 	
 }

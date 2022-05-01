@@ -9,8 +9,9 @@ import javafx.scene.image.ImageView;
 
 public class Drone extends cleanUpPlayers {
 
-	int currentAnimationNum = 0;
+	
 	static Random rand = new Random();
+	private Collectable target;
 	
 	public Drone() {
 		
@@ -20,11 +21,12 @@ public class Drone extends cleanUpPlayers {
 		this.spriteImages = new ArrayList<Image>(Arrays.asList(new Image("file:Images/drone_r2.png"), new Image("file:Images/drone_r3.png"),
 				new Image("file:Images/drone_r1.png"), new Image("file:Images/drone_l2.png"),
 				new Image("file:Images/drone_l3.png"), new Image("file:Images/drone_l1.png")));
+		this.target = null;
 	}
 	
 	public void moveTo(double location) throws InterruptedException {
 		if (location < this.x) {
-			currentAnimationNum = 3;
+			this.currentAnimationNum = 3;
 			changeAnimation();
 		}
 		while (Math.abs(this.x - location) > this.getDestructionRange()) {
@@ -44,6 +46,7 @@ public class Drone extends cleanUpPlayers {
 				}
 			}
 			changeAnimation();
+			Thread.sleep(10);
 		}
 		currentAnimationNum = 0;
 		changeAnimation();
@@ -54,6 +57,21 @@ public class Drone extends cleanUpPlayers {
 	}
 	
 	public void setTarget(Collectable target) {
+		this.target = target;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		if (this.target == null) {
+			return;
+		}
+		try {
+			moveTo(this.target.x);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			return;
+		}
 		
 	}
 }

@@ -14,6 +14,11 @@ public class StartMenu extends GridPane{
 	public StartMenu(GameView view) {
 		this.view = view;
 		this.setAlignment(Pos.CENTER);
+		titling();
+		createButtons();
+	}
+	
+	private void titling() {
 		Text title = new Text("Community Service");
 		title.setTextAlignment(TextAlignment.CENTER);
 		Font titleFont = Font.loadFont("file:ZenKurenaido-Regular.ttf", 40);
@@ -22,7 +27,6 @@ public class StartMenu extends GridPane{
 		box.setAlignment(Pos.CENTER);
 		this.setVgap(10);
 		this.add(box, 0, this.getRowCount());
-		createButtons();
 	}
 	
 	private void createButtons() {
@@ -30,7 +34,11 @@ public class StartMenu extends GridPane{
 		GameButton settingsButton = new GameButton("Settings", 400, 100, 20);
 		GameButton quitButton = new GameButton("Quit Game", 400, 100, 20);
 		
-		quitButton.setOnAction(e -> System.exit(1));
+		quitButton.setOnAction(e -> System.exit(0));
+		startButton.setOnAction(e -> {
+			this.view.gameStarted = true;
+			this.view.showGameScreen();
+		});
 		
 		this.add(startButton, 0, this.getRowCount());
 		this.add(settingsButton, 0, this.getRowCount());

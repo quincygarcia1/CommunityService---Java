@@ -6,10 +6,10 @@ import java.util.Random;
 
 public class Model {
 
-	private ArrayList<cleanUpPlayers> autonomousPlayers = new ArrayList<cleanUpPlayers>();
-	private TrashList garbageUnits;
+	public ArrayList<cleanUpPlayers> autonomousPlayers = new ArrayList<cleanUpPlayers>();
+	public TrashList garbageUnits;
 	private TrashList endPointer;
-	int listLength = 0;
+	int trashCount = 0;
 	Random rand;
 	
 	protected GarbagePlayer movePlayer = new GarbagePlayer();
@@ -31,16 +31,17 @@ public class Model {
 	}
 	
 	private void spawnTrash() {
-		if (listLength > 40) {
+		if (trashCount > 40) {
 			return;
 		}
 		TrashList newElement = null;
 		int garbageType = rand.nextInt(3);
 		if (garbageType == 0) {
-			newElement = new TrashList(new PileItem());
+			newElement = new TrashList(new PileItem(), trashCount);
 		} else if (garbageType > 0) {
-			newElement = new TrashList(new garbageItem());
+			newElement = new TrashList(new garbageItem(), trashCount);
 		}
+		trashCount ++;
 		if (garbageUnits == null) {
 			garbageUnits = newElement;
 		} else {

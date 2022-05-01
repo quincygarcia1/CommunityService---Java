@@ -1,6 +1,7 @@
 package mainGame;
 
 import javafx.application.Application;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -18,6 +19,11 @@ public class App extends Application {
 		this.model = new Model();
 		this.view = new GameView(stage, model);
 		
+		LeftAction left = new LeftAction(view, KeyCode.A);
+		RightAction right = new RightAction(view, KeyCode.D);
+		this.view.setLeftKey(left);
+		this.view.setRightKey(right);
+		this.view.initStart();
 	}
 
 	public static void main(String[] args) {
