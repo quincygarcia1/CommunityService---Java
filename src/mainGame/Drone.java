@@ -8,18 +8,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Drone extends cleanUpPlayers {
-	
-	ArrayList<Image> spriteImages;
+
 	int currentAnimationNum = 0;
 	static Random rand = new Random();
-	
 	
 	public Drone() {
 		
 		super(new ArrayList<Image>(Arrays.asList(new Image("file:Images/drone_r2.png"), new Image("file:Images/drone_r3.png"),
 				new Image("file:Images/drone_r1.png"), new Image("file:Images/drone_l2.png"),
 				new Image("file:Images/drone_l3.png"), new Image("file:Images/drone_l1.png"))), rand.nextInt(1000), 200.00, 25);
-		spriteImages = new ArrayList<Image>(Arrays.asList(new Image("file:Images/drone_r2.png"), new Image("file:Images/drone_r3.png"),
+		this.spriteImages = new ArrayList<Image>(Arrays.asList(new Image("file:Images/drone_r2.png"), new Image("file:Images/drone_r3.png"),
 				new Image("file:Images/drone_r1.png"), new Image("file:Images/drone_l2.png"),
 				new Image("file:Images/drone_l3.png"), new Image("file:Images/drone_l1.png")));
 	}
@@ -46,7 +44,6 @@ public class Drone extends cleanUpPlayers {
 				}
 			}
 			changeAnimation();
-			Thread.sleep(25);
 		}
 		currentAnimationNum = 0;
 		changeAnimation();
@@ -54,5 +51,9 @@ public class Drone extends cleanUpPlayers {
 	
 	private void changeAnimation() {
 		this.setImage(this.spriteImages.get(currentAnimationNum));
+	}
+	
+	public void setTarget(Collectable target) {
+		
 	}
 }

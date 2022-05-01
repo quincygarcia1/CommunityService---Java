@@ -12,6 +12,7 @@ public class Sprite extends ImageView{
 	public double y;
 	private double width;
 	private double height;
+	public ArrayList<Image> spriteImages;
 
 	public Sprite(ArrayList<Image> spriteImages, double x, double y) {
 		// TODO Auto-generated constructor stub
@@ -19,6 +20,7 @@ public class Sprite extends ImageView{
 		this.y = y;
 		this.setX(this.x);
 		this.setY(this.y);
+		this.spriteImages = spriteImages;
 		this.setImage(spriteImages.get(0));
 		this.width = this.getImage().getWidth();
 		this.height = this.getImage().getHeight();

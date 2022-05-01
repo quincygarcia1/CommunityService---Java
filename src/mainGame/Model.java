@@ -7,32 +7,59 @@ import java.util.Random;
 public class Model {
 
 	private ArrayList<cleanUpPlayers> autonomousPlayers = new ArrayList<cleanUpPlayers>();
-	private ArrayList<Collectable> garbageUnits = new ArrayList<Collectable>();
+	private TrashList garbageUnits;
+	private TrashList endPointer;
+	int listLength = 0;
 	Random rand;
 	
 	protected GarbagePlayer movePlayer = new GarbagePlayer();
 	
 	
 	private Collectable findClosestToPlayer() {
-		Collectable max = garbageUnits.get(0);
-		for (int i = 1; i < garbageUnits.size(); i++) {
-			if (movePlayer.distanceBetween(garbageUnits.get(i)) > movePlayer.distanceBetween(max)) {
-				max = garbageUnits.get(i);
+		if (garbageUnits == null) {
+			return null;
+		}
+		Collectable max = garbageUnits.item;
+		TrashList temp = garbageUnits;
+		while (temp.next != null) {
+			if (movePlayer.distanceBetween(temp.next.item) > movePlayer.distanceBetween(max)) {
+				max = temp.next.item;
 			}
+			temp = temp.next; 
 		}
 		return max;
 	}
 	
 	private void spawnTrash() {
-		if (garbageUnits.size() > 40) {
+		if (listLength > 40) {
 			return;
 		}
-		int garbageType = rand.nextInt(2);
+		TrashList newElement = null;
+		int garbageType = rand.nextInt(3);
 		if (garbageType == 0) {
-			garbageUnits.add(new garbageItem);
-		} else if (garbageType == 1) {
-			garbageUnits.add(new PileItem);
+			newElement = new TrashList(new PileItem());
+		} else if (garbageType > 0) {
+			newElement = new TrashList(new garbageItem());
 		}
+		if (garbageUnits == null) {
+			garbageUnits = newElement;
+		} else {
+			newElement.next = garbageUnits;
+			garbageUnits = newElement;
+		}
+	}
+	
+	private Collectable oldestTarget() {
+		TrashList temp = garbageUnits;
+		while (temp != null) {
+			if (temp.assigned) {
+				return null;
+			} else if (temp.next.assigned) {
+				return temp.item;
+			}
+			temp = temp.next;
+		}
+		return null;
 	}
 	
 }

@@ -1,16 +1,17 @@
 package mainGame;
 
 import java.util.ArrayList;
-
+import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public abstract class Collectable extends Sprite {
 
+	static Random rand = new Random();
 	private int hp;
 	
-	public Collectable(ArrayList<Image> spriteImages, double x, double y, int hp) {
-		super(spriteImages, x, y);
+	public Collectable(ArrayList<Image> spriteImages, int hp) {
+		super(spriteImages, rand.nextInt(1000), 130);
 		this.hp = hp;
 	}
 	
@@ -24,6 +25,10 @@ public abstract class Collectable extends Sprite {
 	
 	public void remove() {
 		this.setImage(null);
+	}
+	
+	private void takeDamage(int damagePoints) {
+		this.hp -= damagePoints;
 	}
 	
 }
