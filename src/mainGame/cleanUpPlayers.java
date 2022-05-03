@@ -2,23 +2,35 @@ package mainGame;
 
 import java.util.ArrayList;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
-public abstract class cleanUpPlayers extends Sprite implements Move, Runnable{
+public abstract class cleanUpPlayers extends Sprite implements Move{
 	
 	private double destructionRange;
 	protected int currentAnimationNum = 0;
+	private double translateTime;
 
-	public cleanUpPlayers(ArrayList<Image> spriteImages, double x, double y, double destructionRange) {
+	public cleanUpPlayers(ArrayList<Image> spriteImages, double x, double y, double translateTime, double destructionRange) {
 		super(spriteImages, x, y);
 		this.destructionRange = destructionRange;
+		this.translateTime = translateTime;
 	}
 
 	@Override
 	public double getLocation() {
 		// TODO Auto-generated method stub
 		return this.x;
+	}
+	
+	public double getTime() {
+		return this.translateTime;
+	}
+	
+	public void setTime(double newTime) {
+		this.translateTime = newTime;
 	}
 
 	public void setDestructionRange(double newRange) {
@@ -41,8 +53,14 @@ public abstract class cleanUpPlayers extends Sprite implements Move, Runnable{
 		}
 	}
 	
-	public void moveTo(double location) throws InterruptedException {
+	public void moveTo(double location) {
+		TranslateTransition translate = new TranslateTransition();
+		translate.setNode(this);
+		translate.setDuration(Duration.millis(this.translateTime));
+		translate.setByX(location);
+		translate.play();
 		this.x += location;
+		System.out.print(this.x);
 	}
 	
 	public boolean touches(Sprite otherObject) {
@@ -52,7 +70,5 @@ public abstract class cleanUpPlayers extends Sprite implements Move, Runnable{
 		return false;
 	}
 
-	@Override
-	public abstract void run();
 	
 }

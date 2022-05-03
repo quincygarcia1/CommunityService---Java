@@ -15,9 +15,9 @@ public class GameController extends Pane {
 	public GameController(GameView view, Model model) {
 		this.view = view;
 		this.model = model;
-		this.setPrefSize(1000, 700);
-		this.setMinSize(1000, 700);
-		this.setMaxSize(1000, 700);
+		this.setPrefSize(1200, 700);
+		this.setMinSize(1200, 700);
+		this.setMaxSize(1200, 700);
 		createScreen();
 	}
 	

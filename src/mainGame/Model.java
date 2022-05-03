@@ -8,12 +8,10 @@ public class Model {
 
 	public ArrayList<cleanUpPlayers> autonomousPlayers = new ArrayList<cleanUpPlayers>();
 	public TrashList garbageUnits;
-	private TrashList endPointer;
 	int trashCount = 0;
 	Random rand;
 	
 	protected GarbagePlayer movePlayer = new GarbagePlayer();
-	
 	
 	private Collectable findClosestToPlayer() {
 		if (garbageUnits == null) {
@@ -28,6 +26,11 @@ public class Model {
 			temp = temp.next; 
 		}
 		return max;
+	}
+	
+	public void startThread() {
+		Thread thread = new Thread(movePlayer);
+		thread.start();
 	}
 	
 	private void spawnTrash() {

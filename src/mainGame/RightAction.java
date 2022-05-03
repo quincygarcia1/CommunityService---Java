@@ -20,7 +20,8 @@ public class RightAction implements Action {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		
+		this.view.model.movePlayer.setDirection(true);
+		this.view.model.startThread();
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public class App extends Application {
 	
 	Model model;
 	GameView view;
-	public int GAMEW = 1000;
+	public int GAMEW = 1200;
 	public int GAMEH = 700;
 	
 	public void start(Stage stage) {
@@ -29,6 +29,7 @@ public class App extends Application {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
+		
 	}
 
 }

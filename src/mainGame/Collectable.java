@@ -11,7 +11,7 @@ public abstract class Collectable extends Sprite {
 	private int hp;
 	
 	public Collectable(ArrayList<Image> spriteImages, int hp) {
-		super(spriteImages, rand.nextInt(1000), 130);
+		super(spriteImages, rand.nextInt(1200), 400);
 		this.hp = hp;
 	}
 	
