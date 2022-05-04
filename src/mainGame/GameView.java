@@ -28,6 +28,10 @@ public class GameView {
 			this.commandQueue = new ArrayList<Action>();
 	}
 	
+	//To do: Create a method to update the game view when a change in sprites occurs.
+	//There's a few ways to do this but the preferred method so far is to use the
+	//observable/observer pattern
+	
 	public void initStart() {
 		borderPane = new BorderPane();
 		
@@ -102,6 +106,8 @@ public class GameView {
 		if (nearest == null) {
 			return;
 		}
+		// To do: run a collect method on the "nearest" variable and
+		// delete it from the screen, update the model accordingly.
 	}
 	
 }

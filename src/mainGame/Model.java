@@ -15,7 +15,9 @@ public class Model {
 	protected GarbagePlayer movePlayer = new GarbagePlayer();
 	
 	private Collectable findClosestToPlayer() {
-		
+		//To do: complete this method to find the closest and farthest
+		//collectables from the player so that I can develop a scoring algorithm
+		return null;
 	}
 	
 	public void startThread() {
@@ -32,6 +34,7 @@ public class Model {
 	}
 	
 	private Collectable oldestTarget() {
+		//To do: revise this method to work with the hashtable
 		TrashList temp = garbageUnits;
 		while (temp != null) {
 			if (temp.assigned) {
@@ -64,6 +67,7 @@ public class Model {
 	}
 	
 	private Collectable hashDivisor(int divisor) {
+		// To do: Potentially delete the returned item from the linked list
 		TrashList hash = trashHash.get(divisor);
 		TrashList temp = hash;
 		while (temp != null) {
