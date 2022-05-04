@@ -1,6 +1,7 @@
 package mainGame;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,9 +15,11 @@ public class GameView {
 	Model model;
 	BorderPane borderPane;
 	GameController gamePane;
+	Random rand = new Random();
 	boolean gameStarted = false;
 	private Action leftKey;
 	private Action rightKey;
+	private Action collectKey;
 	private ArrayList<Action> commandQueue;
 		
 	public GameView(Stage stage, Model model) {
@@ -42,6 +45,11 @@ public class GameView {
 				this.commandQueue.add(rightKey);
 				rightKey.execute();
 				this.commandQueue.remove(rightKey);
+			}
+			if (gameStarted && e.getCode() == collectKey.getKey()) {
+				this.commandQueue.add(collectKey);
+				collectKey.execute();
+				this.commandQueue.remove(collectKey);
 			}
 		});
 		
@@ -69,6 +77,31 @@ public class GameView {
 	
 	protected void setRightKey(Action action) {
 		this.rightKey = action;
+	}
+	
+	protected void setCollectKey(Action action) {
+		this.collectKey = action;
+	}
+	
+	private void spawnTrash() {
+		if (this.model.trashCount > 40) {
+			return;
+		}
+		TrashList newElement = null;
+		int garbageType = rand.nextInt(3);
+		if (garbageType == 0) {
+			newElement = new TrashList(new PileItem());
+		} else if (garbageType > 0) {
+			newElement = new TrashList(new garbageItem());
+		}
+		this.model.registerTrash(newElement);
+	}
+	
+	protected void collectNearest() {
+		Collectable nearest = this.model.checkProximity();
+		if (nearest == null) {
+			return;
+		}
 	}
 	
 }

@@ -21,8 +21,10 @@ public class App extends Application {
 		
 		LeftAction left = new LeftAction(view, KeyCode.A);
 		RightAction right = new RightAction(view, KeyCode.D);
+		CollectAction collect = new CollectAction(view, KeyCode.SPACE);
 		this.view.setLeftKey(left);
 		this.view.setRightKey(right);
+		this.view.setCollectKey(collect);
 		this.view.initStart();
 	}
 

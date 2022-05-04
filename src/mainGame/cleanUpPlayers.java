@@ -4,13 +4,12 @@ import java.util.ArrayList;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public abstract class cleanUpPlayers extends Sprite implements Move{
 	
 	private double destructionRange;
-	protected int currentAnimationNum = 0;
+	int currentAnimationNum = 0;
 	private double translateTime;
 
 	public cleanUpPlayers(ArrayList<Image> spriteImages, double x, double y, double translateTime, double destructionRange) {
@@ -60,7 +59,6 @@ public abstract class cleanUpPlayers extends Sprite implements Move{
 		translate.setByX(location);
 		translate.play();
 		this.x += location;
-		System.out.print(this.x);
 	}
 	
 	public boolean touches(Sprite otherObject) {

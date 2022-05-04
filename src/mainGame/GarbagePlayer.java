@@ -2,6 +2,7 @@ package mainGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import javafx.scene.image.Image;
 
@@ -11,7 +12,11 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	int currentAnimationNum = 0;
 	private boolean direction;
 	private boolean activeAnimation = false;
+	private boolean collecting = false;
+	private Collectable targetItem;
+	private int multiplier = 100;
 	private int movementSpeed = 4;
+	Random rand = new Random();
 	
 	public GarbagePlayer() {
 		super(new ArrayList<Image>(Arrays.asList(new Image("file:Images/player_r2.png"), new Image("file:Images/player_r3.png"),
@@ -24,7 +29,7 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	}
 	
 	public void moveRight() throws InterruptedException {
-		if (activeAnimation) {
+		if (activeAnimation || this.x >= (1200 - (this.getW() + 15.9))) {
 			return;
 		}
 		activeAnimation = true;
@@ -40,7 +45,7 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	}
 	
 	public void moveLeft() throws InterruptedException {
-		if (activeAnimation) {
+		if (activeAnimation || this.x <= 0) {
 			return;
 		}
 		activeAnimation = true;
@@ -56,8 +61,25 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 		activeAnimation = false;
 	}
 	
+	private void collectTarget() throws InterruptedException {
+		Thread.sleep((this.targetItem.getHP() + rand.nextInt(this.targetItem.getHP()/2)) * this.multiplier);
+		collecting = false;
+	}
+	
 	public void setDirection(boolean goingRight) {
 		this.direction = goingRight;
+	}
+	
+	public void setCollecting(boolean status) {
+		this.collecting = status;
+	}
+	
+	public void setMultiplier(int newVal) {
+		this.multiplier = newVal;
+	}
+	
+	public void setTarget(Collectable target) {
+		this.targetItem = target;
 	}
 	
 	private void changeAnimation() {
@@ -67,6 +89,15 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		if (collecting) {
+			try {
+				collectTarget();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				return;
+			}
+			return;
+		}
 		if (direction) {
 			try {
 				moveRight();
