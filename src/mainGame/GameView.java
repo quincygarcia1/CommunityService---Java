@@ -3,13 +3,14 @@ package mainGame;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class GameView {
+public class GameView implements Observer {
 	
 	Stage stage;
 	Model model;
@@ -21,11 +22,16 @@ public class GameView {
 	private Action rightKey;
 	private Action collectKey;
 	private ArrayList<Action> commandQueue;
+	private TrashTimer timer;
+	
 		
 	public GameView(Stage stage, Model model) {
 			this.stage = stage;
 			this.model = model;
 			this.commandQueue = new ArrayList<Action>();
+			this.timer = new TrashTimer();
+			timer.setObservingView(this);
+			this.timer.notifyObserver();
 	}
 	
 	//To do: Create a method to update the game view when a change in sprites occurs.
@@ -99,6 +105,7 @@ public class GameView {
 			newElement = new TrashList(new garbageItem());
 		}
 		this.model.registerTrash(newElement);
+		this.gamePane.addElement(newElement.item);
 	}
 	
 	protected void collectNearest() {
@@ -108,6 +115,26 @@ public class GameView {
 		}
 		// To do: run a collect method on the "nearest" variable and
 		// delete it from the screen, update the model accordingly.
+		this.gamePane.removeElement(nearest);
+		nearest.setImage(null);
+		nearest = null;
+	}
+
+	@Override
+	public void update(double observableState) {
+		// TODO Auto-generated method stub
+		Platform.runLater(new Runnable() {
+			public void run() {
+				if (observableState == 0.0) {
+					timer.resetTimer();
+					if (model.trashHash.size() == 0) {
+						model.fillHash();
+					}
+					spawnTrash();
+					timer.notifyObserver();
+				}
+			}
+		});
 	}
 	
 }

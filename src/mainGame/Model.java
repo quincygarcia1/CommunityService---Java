@@ -14,6 +14,12 @@ public class Model {
 	
 	protected GarbagePlayer movePlayer = new GarbagePlayer();
 	
+	public void fillHash() {
+		for (int i = 0; i < hashSize; i++) {
+			trashHash.add(null);
+		}
+	}
+	
 	private Collectable findClosestToPlayer() {
 		//To do: complete this method to find the closest and farthest
 		//collectables from the player so that I can develop a scoring algorithm
@@ -35,15 +41,7 @@ public class Model {
 	
 	private Collectable oldestTarget() {
 		//To do: revise this method to work with the hashtable
-		TrashList temp = garbageUnits;
-		while (temp != null) {
-			if (temp.assigned) {
-				return null;
-			} else if (temp.next.assigned) {
-				return temp.item;
-			}
-			temp = temp.next;
-		}
+		
 		return null;
 	}
 	

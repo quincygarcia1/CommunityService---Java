@@ -25,6 +25,13 @@ public class GameController extends Pane {
 		this.getChildren().add(this.model.movePlayer);
 	}
 	
+	protected void removeElement(Sprite sprite) {
+		this.getChildren().remove(sprite);
+	}
+	
+	protected void addElement(Sprite sprite) {
+		this.getChildren().add(sprite);
+	}
 	
 	public void update() {
 		

@@ -20,7 +20,9 @@ public class CollectAction implements Action{
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		
+		this.view.collectNearest();
+		this.view.model.movePlayer.setCollecting(true);
+		this.view.model.startThread();
 	}
 
 	@Override
