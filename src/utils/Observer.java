@@ -1,4 +1,4 @@
-package mainGame;
+package utils;
 
 public interface Observer {
 

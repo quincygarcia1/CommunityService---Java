@@ -9,6 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import utils.Action;
+import utils.Collectable;
+import utils.Observer;
+import utils.TrashList;
 
 public class GameView implements Observer {
 	
@@ -98,14 +102,14 @@ public class GameView implements Observer {
 			return;
 		}
 		TrashList newElement = null;
-		int garbageType = rand.nextInt(3);
+		int garbageType = rand.nextInt(this.model.getReciprocal());
 		if (garbageType == 0) {
 			newElement = new TrashList(new PileItem());
 		} else if (garbageType > 0) {
 			newElement = new TrashList(new garbageItem());
 		}
 		this.model.registerTrash(newElement);
-		this.gamePane.addElement(newElement.item);
+		this.gamePane.addElement(newElement.getItem());
 	}
 	
 	protected void collectNearest() {
@@ -126,11 +130,23 @@ public class GameView implements Observer {
 		Platform.runLater(new Runnable() {
 			public void run() {
 				if (observableState == 0.0) {
+					timer.stopTimer();
 					timer.resetTimer();
 					if (model.trashHash.size() == 0) {
 						model.fillHash();
 					}
-					spawnTrash();
+					int spawnQuantity = rand.nextInt(model.getReciprocal() * 2);
+					if (spawnQuantity == 0) {
+						spawnTrash();
+						spawnTrash();
+						spawnTrash();
+					} else if (spawnQuantity == 1 || spawnQuantity == 2) {
+						spawnTrash();
+						spawnTrash();
+					} else {
+						spawnTrash();
+					}
+					System.out.println(timer.getObservableState());
 					timer.notifyObserver();
 				}
 			}

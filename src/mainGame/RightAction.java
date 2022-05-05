@@ -1,6 +1,7 @@
 package mainGame;
 
 import javafx.scene.input.KeyCode;
+import utils.Action;
 
 public class RightAction implements Action {
 

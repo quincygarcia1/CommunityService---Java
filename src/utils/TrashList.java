@@ -1,9 +1,9 @@
-package mainGame;
+package utils;
 
 public class TrashList {
 	
 	public boolean assigned;
-	Collectable item;
+	private Collectable item;
 	public TrashList next;
 	
 
@@ -15,6 +15,10 @@ public class TrashList {
 	
 	public void droneSet() {
 		this.assigned = true;
+	}
+	
+	public Collectable getItem() {
+		return this.item;
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import javafx.scene.image.Image;
+import utils.Collectable;
 
 public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	

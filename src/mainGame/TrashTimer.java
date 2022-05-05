@@ -4,6 +4,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import utils.Observable;
+import utils.Observer;
+
 public class TrashTimer extends Observable {
 
 	private Observer view;
@@ -67,7 +70,6 @@ public class TrashTimer extends Observable {
 		this.secondsLeft = (rand.nextInt(this.offset/3) + 1) + (this.offset - (this.offset/4));
 		this.millisecondsLeft = rand.nextInt(1000);
 		this.setObservableState(secondsLeft + (millisecondsLeft/1000));
-		System.out.println(this.getObservableState());
 		this.hasStarted = false;
 	}
 	

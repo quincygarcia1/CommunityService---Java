@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import javafx.scene.image.Image;
+import utils.Collectable;
 
 public class garbageItem extends Collectable {
 	

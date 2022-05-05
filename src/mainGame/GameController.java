@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.Pane;
+import utils.Collectable;
 
 public class GameController extends Pane {
 

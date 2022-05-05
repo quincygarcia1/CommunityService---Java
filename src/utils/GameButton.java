@@ -1,4 +1,4 @@
-package mainGame;
+package utils;
 
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
