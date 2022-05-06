@@ -14,6 +14,7 @@ public class Model {
 	int trashReciprocal = 6;
 	public ArrayList<cleanUpPlayers> autonomousPlayers = new ArrayList<cleanUpPlayers>();
 	public ArrayList<TrashList> trashHash = new ArrayList<TrashList>(hashSize);
+	private ArrayList<Integer> occupiedBuckets = new ArrayList<Integer>(hashSize);
 	protected int trashCount = 0;
 	Random rand;
 	
@@ -41,6 +42,7 @@ public class Model {
 		int hashVal = hash(newElement.getItem().x) % hashSize;
 		newElement.next = trashHash.get(hashVal);
 		trashHash.set(hashVal, newElement);
+		occupiedBuckets.add(hashVal);
 		trashCount ++;
 	}
 	

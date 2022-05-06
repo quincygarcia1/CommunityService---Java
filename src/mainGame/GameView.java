@@ -119,6 +119,7 @@ public class GameView implements Observer {
 		}
 		// To do: run a collect method on the "nearest" variable and
 		// delete it from the screen, update the model accordingly.
+		this.model.movePlayer.setTarget(nearest);
 		this.gamePane.removeElement(nearest);
 		nearest.setImage(null);
 		nearest = null;
@@ -146,7 +147,7 @@ public class GameView implements Observer {
 					} else {
 						spawnTrash();
 					}
-					System.out.println(timer.getObservableState());
+
 					timer.notifyObserver();
 				}
 			}
