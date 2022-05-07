@@ -6,6 +6,7 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 import utils.Move;
+import utils.Sprite;
 
 public abstract class cleanUpPlayers extends Sprite implements Move{
 	

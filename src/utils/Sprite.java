@@ -1,4 +1,4 @@
-package mainGame;
+package utils;
 
 import java.util.ArrayList;
 
@@ -36,6 +36,10 @@ public class Sprite extends ImageView{
 	}
 	
 	public double getXCenter() {
+		return this.x + this.width * 0.5;
+	}
+	
+	public double getFront() {
 		return this.x + this.width * 0.5;
 	}
 	
