@@ -41,6 +41,7 @@ public class Model {
 		
 		int hashVal = hash(newElement.getItem().x) % hashSize;
 		newElement.next = trashHash.get(hashVal);
+		System.out.println(hashVal);
 		trashHash.set(hashVal, newElement);
 		occupiedBuckets.add(hashVal);
 		trashCount ++;
@@ -54,9 +55,13 @@ public class Model {
 	
 	protected Collectable checkProximity() {
 		double divisor = this.movePlayer.x/(double)this.movePlayer.getDestructionRange();
+		System.out.print(divisor);
 		if ((divisor - 0.5) == (int)divisor) {
-			Collectable bottomBound = hashDivisor((int)(divisor - 0.5));
-			Collectable upperBound = hashDivisor((int)(divisor + 0.5));
+			Collectable bottomBound = hashDivisor((int)((divisor - 0.5) * this.movePlayer.getDestructionRange()) % hashSize);
+			Collectable upperBound = hashDivisor((int)((divisor + 0.5) * this.movePlayer.getDestructionRange()) % hashSize);
+			if (bottomBound == null && upperBound == null) {
+				return null;
+			}
 			if (bottomBound == null && upperBound != null) {
 				return upperBound;
 			} else if (bottomBound != null && upperBound == null) {
@@ -67,7 +72,7 @@ public class Model {
 			}
 			return upperBound;
 		} else {
-			return hashDivisor((int)Math.round(divisor));
+			return hashDivisor((int)(Math.round(divisor) * this.movePlayer.getDestructionRange()) % hashSize);
 		}
 	}
 	
@@ -85,8 +90,7 @@ public class Model {
 	}
 	
 	private int hash(double val) {
-		double a = 0.45352364758429879433234;
-		return (int)(a * (Math.round(val/movePlayer.getDestructionRange()) * movePlayer.getDestructionRange()));
+		return (int)(Math.round(val/movePlayer.getDestructionRange()) * movePlayer.getDestructionRange());
 	}
 	
 	public void increaseScore(int increment) {

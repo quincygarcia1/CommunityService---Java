@@ -2,6 +2,7 @@ package mainGame;
 
 import javafx.scene.input.KeyCode;
 import utils.Action;
+import utils.Collectable;
 
 public class CollectAction implements Action{
 	
@@ -21,7 +22,10 @@ public class CollectAction implements Action{
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		this.view.collectNearest();
+		Collectable res = this.view.collectNearest();
+		if (res == null) {
+			return;
+		}
 		this.view.model.movePlayer.setCollecting(true);
 		this.view.model.startThread();
 	}

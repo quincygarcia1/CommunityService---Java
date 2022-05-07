@@ -112,17 +112,19 @@ public class GameView implements Observer {
 		this.gamePane.addElement(newElement.getItem());
 	}
 	
-	protected void collectNearest() {
+	protected Collectable collectNearest() {
 		Collectable nearest = this.model.checkProximity();
 		if (nearest == null) {
-			return;
+			return null;
 		}
 		// To do: run a collect method on the "nearest" variable and
 		// delete it from the screen, update the model accordingly.
+		Collectable temp = nearest;
 		this.model.movePlayer.setTarget(nearest);
 		this.gamePane.removeElement(nearest);
 		nearest.setImage(null);
 		nearest = null;
+		return temp;
 	}
 
 	@Override
@@ -130,13 +132,14 @@ public class GameView implements Observer {
 		// TODO Auto-generated method stub
 		Platform.runLater(new Runnable() {
 			public void run() {
+				if (model.trashHash.size() == 0) {
+					model.fillHash();
+				}
 				if (observableState == 0.0) {
 					timer.stopTimer();
 					timer.resetTimer();
-					if (model.trashHash.size() == 0) {
-						model.fillHash();
-					}
-					int spawnQuantity = rand.nextInt(model.getReciprocal() * 2);
+					
+					int spawnQuantity = rand.nextInt(model.getReciprocal() * 3);
 					if (spawnQuantity == 0) {
 						spawnTrash();
 						spawnTrash();
