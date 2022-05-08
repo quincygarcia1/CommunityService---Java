@@ -40,7 +40,7 @@ public class Sprite extends ImageView{
 	}
 	
 	public double getFront() {
-		return this.x + this.width * 0.5;
+		return this.x + this.width;
 	}
 	
 	public double getYCenter() {

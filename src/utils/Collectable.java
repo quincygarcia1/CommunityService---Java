@@ -10,8 +10,8 @@ public abstract class Collectable extends Sprite {
 	static Random rand = new Random();
 	private int hp;
 	
-	public Collectable(ArrayList<Image> spriteImages, int hp) {
-		super(spriteImages, rand.nextInt(1200), 400);
+	public Collectable(ArrayList<Image> spriteImages, int hp, int y) {
+		super(spriteImages, rand.nextInt(1200), y);
 		this.hp = hp;
 	}
 	

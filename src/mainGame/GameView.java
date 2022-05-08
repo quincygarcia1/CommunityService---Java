@@ -37,6 +37,10 @@ public class GameView implements Observer {
 			timer.setObservingView(this);
 			this.timer.notifyObserver();
 	}
+	//To do (May 6): start on the shop screen and create the power-ups.
+	//Consider changing the game font.
+	//When completed, consider adding a mode where you click to move
+	
 	
 	//To do: Create a method to update the game view when a change in sprites occurs.
 	//There's a few ways to do this but the preferred method so far is to use the
@@ -129,7 +133,7 @@ public class GameView implements Observer {
 
 	@Override
 	public void update(double observableState) {
-		// TODO Auto-generated method stub
+		// TODO add code that updates a new time attribute on the collectables
 		Platform.runLater(new Runnable() {
 			public void run() {
 				if (model.trashHash.size() == 0) {

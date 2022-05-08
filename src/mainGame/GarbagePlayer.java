@@ -15,14 +15,14 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	private boolean activeAnimation = false;
 	private boolean collecting = false;
 	private Collectable targetItem;
-	private int multiplier = 100;
+	private int multiplier = 500;
 	private int movementSpeed = 4;
 	Random rand = new Random();
 	
 	public GarbagePlayer() {
 		super(new ArrayList<Image>(Arrays.asList(new Image("file:Images/player_r2.png"), new Image("file:Images/player_r3.png"),
 				new Image("file:Images/player_r1.png"), new Image("file:Images/player_l2.png"), new Image("file:Images/player_l3.png"),
-				new Image("file:Images/player_l1.png"))), 500, 400, 15, 30);
+				new Image("file:Images/player_l1.png"))), 500, 400, 15, 41);
 		// TODO Auto-generated constructor stub
 		this.spriteImages = new ArrayList<Image>(Arrays.asList(new Image("file:Images/player_r2.png"), new Image("file:Images/player_r3.png"),
 				new Image("file:Images/player_r1.png"), new Image("file:Images/player_l2.png"), new Image("file:Images/player_l3.png"),
@@ -30,7 +30,7 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	}
 	
 	public void moveRight() throws InterruptedException {
-		if (activeAnimation || collecting || this.x >= (1200 - (this.getW() + 15.9))) {
+		if (activeAnimation || collecting || this.getFront() >= 1200) {
 			return;
 		}
 		activeAnimation = true;
@@ -63,7 +63,13 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	}
 	
 	private void collectTarget() throws InterruptedException {
-		Thread.sleep((this.targetItem.getHP() + rand.nextInt(this.targetItem.getHP()/2)) * this.multiplier);
+		try {
+			Thread.sleep((this.targetItem.getHP() + rand.nextInt(this.targetItem.getHP()/2)) * this.multiplier);
+		} catch(IllegalArgumentException e) {
+			collecting = false;
+			return;
+		}
+		
 		collecting = false;
 	}
 	

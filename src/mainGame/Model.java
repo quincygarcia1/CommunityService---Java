@@ -39,7 +39,7 @@ public class Model {
 	
 	protected void registerTrash(TrashList newElement) {
 		
-		int hashVal = hash(newElement.getItem().x) % hashSize;
+		int hashVal = hash(newElement.getItem().getXCenter()) % hashSize;
 		newElement.next = trashHash.get(hashVal);
 		System.out.println(hashVal);
 		trashHash.set(hashVal, newElement);
@@ -55,7 +55,7 @@ public class Model {
 	
 	protected Collectable checkProximity() {
 		double divisor = this.movePlayer.x/(double)this.movePlayer.getDestructionRange();
-		System.out.print(divisor);
+		
 		if ((divisor - 0.5) == (int)divisor) {
 			Collectable bottomBound = hashDivisor((int)((divisor - 0.5) * this.movePlayer.getDestructionRange()) % hashSize);
 			Collectable upperBound = hashDivisor((int)((divisor + 0.5) * this.movePlayer.getDestructionRange()) % hashSize);
@@ -65,11 +65,14 @@ public class Model {
 			if (bottomBound == null && upperBound != null) {
 				return upperBound;
 			} else if (bottomBound != null && upperBound == null) {
+				System.out.println(bottomBound.x);
 				return bottomBound;
 			}
 			if (Math.abs(this.movePlayer.x - bottomBound.x) > Math.abs(this.movePlayer.x - upperBound.x)) {
+				System.out.println(bottomBound.x);
 				return bottomBound;
 			}
+			System.out.println(upperBound.x);
 			return upperBound;
 		} else {
 			return hashDivisor((int)(Math.round(divisor) * this.movePlayer.getDestructionRange()) % hashSize);
@@ -77,11 +80,11 @@ public class Model {
 	}
 	
 	private Collectable hashDivisor(int divisor) {
-		// To do: Potentially delete the returned item from the linked list
+		System.out.println(divisor);
 		TrashList hash = trashHash.get(divisor);
 		TrashList temp = hash;
 		while (temp != null) {
-			if (temp.getItem().x <= (this.movePlayer.x + this.movePlayer.getDestructionRange()) && temp.getItem().x >= (this.movePlayer.x - this.movePlayer.getDestructionRange())) {
+			if (temp.getItem().getXCenter() <= (this.movePlayer.x + this.movePlayer.getDestructionRange()) && temp.getItem().x >= (this.movePlayer.x - this.movePlayer.getDestructionRange())) {
 				return temp.getItem();
 			}
 			temp = temp.next;

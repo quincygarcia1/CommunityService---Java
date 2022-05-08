@@ -12,7 +12,7 @@ public class GameController extends Pane {
 
 	private final GameView view;
 	private final Model model;
-	private Hashtable<Integer, Collectable> trashHash = new Hashtable<Integer, Collectable>(40);
+	
 	
 	public GameController(GameView view, Model model) {
 		this.view = view;
@@ -33,6 +33,7 @@ public class GameController extends Pane {
 	
 	protected void addElement(Sprite sprite) {
 		this.getChildren().add(sprite);
+		this.getChildren().get(this.getChildren().size() - 1).toBack();
 	}
 	
 	public void update() {
