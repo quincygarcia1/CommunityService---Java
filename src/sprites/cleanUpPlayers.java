@@ -1,4 +1,4 @@
-package mainGame;
+package sprites;
 
 import java.util.ArrayList;
 
@@ -6,12 +6,10 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 import utils.Move;
-import utils.Sprite;
 
 public abstract class cleanUpPlayers extends Sprite implements Move{
 	
 	private double destructionRange;
-	int currentAnimationNum = 0;
 	private double translateTime;
 
 	public cleanUpPlayers(ArrayList<Image> spriteImages, double x, double y, double translateTime, double destructionRange) {

@@ -5,8 +5,8 @@ import java.util.Hashtable;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.Pane;
-import utils.Collectable;
-import utils.Sprite;
+import sprites.Collectable;
+import sprites.Sprite;
 
 public class GameController extends Pane {
 

@@ -1,10 +1,9 @@
-package mainGame;
+package sprites;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import javafx.scene.image.Image;
-import utils.Collectable;
 
 public class garbageItem extends Collectable {
 	
@@ -14,7 +13,7 @@ public class garbageItem extends Collectable {
 	public garbageItem() {
 		super(new ArrayList<Image>(Arrays.asList(new Image("file:Images/Garbage1-Undamaged.png"), new Image("file:Images/Garbage1-SlightDamage.png"),
 				new Image("file:Images/Garbage1-Destroyed.png"), new Image("file:Images/Garbage2-Undamaged.png"), 
-				new Image("file:Images/Garbage2-Destroyed.png"))), rand.nextInt(4) + 1, 415);
+				new Image("file:Images/Garbage2-Destroyed.png"))), rand.nextInt(3) + 2, 415);
 		// TODO Auto-generated constructor stub
 		chooseSprite();
 	}
@@ -28,6 +27,13 @@ public class garbageItem extends Collectable {
 		animationSet = 0;
 	}
 	
+	public void changeAnimation() {
+		if (animationSet == 0) {
+			if (this.currentAnimationNum < 2) {
+				this.currentAnimationNum = 2;
+			}
+		}
+	}
 	
 
 }

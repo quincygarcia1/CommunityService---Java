@@ -1,16 +1,14 @@
-package mainGame;
+package sprites;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 import javafx.scene.image.Image;
-import utils.Collectable;
 
 public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	
 	ArrayList<Image> spriteImages;
-	int currentAnimationNum = 0;
 	private boolean direction;
 	private boolean activeAnimation = false;
 	private boolean collecting = false;
@@ -66,6 +64,7 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 		try {
 			Thread.sleep((this.targetItem.getHP() + rand.nextInt(this.targetItem.getHP()/2)) * this.multiplier);
 		} catch(IllegalArgumentException e) {
+			System.out.print("sleep error");
 			collecting = false;
 			return;
 		}

@@ -1,5 +1,7 @@
 package utils;
 
+import sprites.Collectable;
+
 public class TrashList {
 	
 	public boolean assigned;

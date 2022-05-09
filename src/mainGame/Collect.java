@@ -1,6 +1,6 @@
 package mainGame;
 
-import utils.Collectable;
+import sprites.Collectable;
 
 public interface Collect {
 	

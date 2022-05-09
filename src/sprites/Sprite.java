@@ -1,4 +1,4 @@
-package utils;
+package sprites;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 
 public class Sprite extends ImageView{
 	
+	int currentAnimationNum = 0;
 	public double x;
 	public double y;
 	private double width;

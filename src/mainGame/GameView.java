@@ -9,8 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import sprites.Collectable;
+import sprites.PileItem;
+import sprites.garbageItem;
 import utils.Action;
-import utils.Collectable;
 import utils.Observer;
 import utils.TrashList;
 
@@ -138,6 +140,14 @@ public class GameView implements Observer {
 			public void run() {
 				if (model.trashHash.size() == 0) {
 					model.fillHash();
+				}
+				for (int i = 0; i < model.getBuckets().size(); i ++) {
+					TrashList occupiedBucket = model.trashHash.get(i);
+					TrashList temp = occupiedBucket;
+					while (temp != null) {
+						temp.getItem().addMillisecond();
+						temp = temp.next;
+					}
 				}
 				if (observableState == 0.0) {
 					timer.stopTimer();

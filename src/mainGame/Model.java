@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import utils.Collectable;
+import sprites.Collectable;
+import sprites.GarbagePlayer;
+import sprites.cleanUpPlayers;
 import utils.TrashList;
 
 public class Model {
@@ -35,6 +37,10 @@ public class Model {
 	public void startThread() {
 		Thread thread = new Thread(movePlayer);
 		thread.start();
+	}
+	
+	public ArrayList<Integer> getBuckets() {
+		return occupiedBuckets;
 	}
 	
 	protected void registerTrash(TrashList newElement) {
@@ -83,9 +89,16 @@ public class Model {
 		System.out.println(divisor);
 		TrashList hash = trashHash.get(divisor);
 		TrashList temp = hash;
-		while (temp != null) {
-			if (temp.getItem().getXCenter() <= (this.movePlayer.x + this.movePlayer.getDestructionRange()) && temp.getItem().x >= (this.movePlayer.x - this.movePlayer.getDestructionRange())) {
-				return temp.getItem();
+		if ((temp != null) && temp.getItem().getXCenter() <= (this.movePlayer.x + this.movePlayer.getDestructionRange()) && temp.getItem().x >= (this.movePlayer.x - this.movePlayer.getDestructionRange())) {
+			TrashList returnValue = temp;
+			trashHash.set(divisor, temp.next);
+			return returnValue.getItem();
+		}
+		while (temp != null && temp.next != null) {
+			if (temp.next.getItem().getXCenter() <= (this.movePlayer.x + this.movePlayer.getDestructionRange()) && temp.next.getItem().x >= (this.movePlayer.x - this.movePlayer.getDestructionRange())) {
+				Collectable target = temp.next.getItem();
+				temp.next = temp.next.next;
+				return target;
 			}
 			temp = temp.next;
 		}

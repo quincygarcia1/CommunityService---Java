@@ -1,4 +1,4 @@
-package utils;
+package sprites;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,10 +9,13 @@ public abstract class Collectable extends Sprite {
 
 	static Random rand = new Random();
 	private int hp;
+	private float time;
+	
 	
 	public Collectable(ArrayList<Image> spriteImages, int hp, int y) {
 		super(spriteImages, rand.nextInt(1200), y);
 		this.hp = hp;
+		this.time = 0;
 	}
 	
 	public int getHP() {
@@ -30,5 +33,14 @@ public abstract class Collectable extends Sprite {
 	private void takeDamage(int damagePoints) {
 		this.hp -= damagePoints;
 	}
+	
+	public float getTime() {
+		return this.time;
+	}
+	
+	public void addMillisecond() {
+		this.time += 0.001;
+	}
+	
 	
 }
