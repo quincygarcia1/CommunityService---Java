@@ -18,6 +18,10 @@ public class garbageItem extends Collectable {
 		chooseSprite();
 	}
 	
+	public int getSet() {
+		return this.animationSet;
+	}
+	
 	private void chooseSprite() {
 		int boxNum = rand.nextInt(2);
 		if (boxNum == 0) {
@@ -27,12 +31,12 @@ public class garbageItem extends Collectable {
 		animationSet = 0;
 	}
 	
+	public void destroy() {
+		
+	}
+	
 	public void changeAnimation() {
-		if (animationSet == 0) {
-			if (this.currentAnimationNum < 2) {
-				this.currentAnimationNum = 2;
-			}
-		}
+		this.setImage(this.spriteImages.get(currentAnimationNum));
 	}
 	
 
