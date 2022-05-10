@@ -18,7 +18,11 @@ public abstract class PowerUp extends GameButton {
 		return this.cost;
 	}
 	
-	public void setTitle(KeyCode key) {
+	public void setCost(int newCost) {
+		this.cost = newCost;
+	}
+	
+	public void setTitle(String title) {
 		this.setText(title);
 	}
 

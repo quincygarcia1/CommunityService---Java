@@ -34,9 +34,20 @@ public class Model {
 		return null;
 	}
 	
-	public void startThread() {
+	public Thread startThread() {
 		Thread thread = new Thread(movePlayer);
 		thread.start();
+		return thread;
+	}
+	
+	public Thread startGarbageThread() {
+		if (movePlayer.getTarget() == null) {
+			return null;
+		}
+		Thread thread = new Thread(movePlayer.getTarget());
+		thread.start();
+		
+		return thread;
 	}
 	
 	public ArrayList<Integer> getBuckets() {

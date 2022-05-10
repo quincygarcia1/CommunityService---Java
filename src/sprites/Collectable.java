@@ -5,7 +5,7 @@ import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public abstract class Collectable extends Sprite {
+public abstract class Collectable extends Sprite implements Runnable {
 
 	static Random rand = new Random();
 	private int hp;
@@ -41,6 +41,8 @@ public abstract class Collectable extends Sprite {
 	public void addMillisecond() {
 		this.time += 0.001;
 	}
+	
+	public abstract void run();
 	
 	
 }

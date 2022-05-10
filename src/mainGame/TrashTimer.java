@@ -11,7 +11,7 @@ public class TrashTimer extends Observable {
 
 	private Observer view;
 	private double secondsLeft;
-	private int millisecondsLeft;
+	private double millisecondsLeft;
 	private boolean hasStarted;
 	private int offset;
 	private Timer timer;
@@ -69,7 +69,7 @@ public class TrashTimer extends Observable {
 	public void resetTimer() {
 		this.secondsLeft = (double)(rand.nextInt(this.offset/3) + 1) + (this.offset - (this.offset/4));
 		this.millisecondsLeft = rand.nextInt(1000);
-		this.setObservableState(secondsLeft + (millisecondsLeft/1000));
+		this.setObservableState(secondsLeft + ((double)millisecondsLeft/1000));
 		this.hasStarted = false;
 	}
 	

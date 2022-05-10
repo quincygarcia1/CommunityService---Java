@@ -15,6 +15,12 @@ public class PileItem extends Collectable{
 				new Image("file:Images/BigGarbage-Destroyed.png"))), rand.nextInt(5) + 3, 380);
 		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

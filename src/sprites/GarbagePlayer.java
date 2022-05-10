@@ -13,7 +13,7 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	private boolean activeAnimation = false;
 	private boolean collecting = false;
 	private Collectable targetItem;
-	private int multiplier = 500;
+	private int multiplier = 900;
 	private int movementSpeed = 4;
 	Random rand = new Random();
 	
@@ -62,13 +62,14 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	
 	private void collectTarget() throws InterruptedException {
 		try {
-			Thread.sleep((this.targetItem.getHP() + rand.nextInt(this.targetItem.getHP()/2)) * this.multiplier);
+			int time = (this.targetItem.getHP() + rand.nextInt((this.targetItem.getHP()/2) + 1)) * this.multiplier;
+			Thread.sleep(time);
+			
 		} catch(IllegalArgumentException e) {
 			System.out.print("sleep error");
 			collecting = false;
 			return;
 		}
-		
 		collecting = false;
 	}
 	
@@ -80,12 +81,20 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 		this.collecting = status;
 	}
 	
+	public boolean isCollecting() {
+		return this.collecting;
+	}
+	
 	public void setMultiplier(int newVal) {
 		this.multiplier = newVal;
 	}
 	
 	public void setTarget(Collectable target) {
 		this.targetItem = target;
+	}
+	
+	public Collectable getTarget() {
+		return this.targetItem;
 	}
 	
 	private void changeAnimation() {

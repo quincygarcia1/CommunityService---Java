@@ -125,12 +125,9 @@ public class GameView implements Observer {
 		}
 		// To do: run a collect method on the "nearest" variable and
 		// delete it from the screen, update the model accordingly.
-		Collectable temp = nearest;
 		this.model.movePlayer.setTarget(nearest);
-		this.gamePane.removeElement(nearest);
-		nearest.setImage(null);
-		nearest = null;
-		return temp;
+		System.out.println(nearest.x);
+		return nearest;
 	}
 
 	@Override
@@ -141,7 +138,7 @@ public class GameView implements Observer {
 				if (model.trashHash.size() == 0) {
 					model.fillHash();
 				}
-				for (int i = 0; i < model.getBuckets().size(); i ++) {
+				for (int i = 0; i < 40; i ++) {
 					TrashList occupiedBucket = model.trashHash.get(i);
 					TrashList temp = occupiedBucket;
 					while (temp != null) {
