@@ -138,8 +138,8 @@ public class GameView implements Observer {
 				if (model.trashHash.size() == 0) {
 					model.fillHash();
 				}
-				for (int i = 0; i < 40; i ++) {
-					TrashList occupiedBucket = model.trashHash.get(i);
+				for (int i = 0; i < model.occupiedBuckets.size(); i ++) {
+					TrashList occupiedBucket = model.trashHash.get(model.occupiedBuckets.get(i));
 					TrashList temp = occupiedBucket;
 					while (temp != null) {
 						temp.getItem().addMillisecond();

@@ -8,6 +8,7 @@ public abstract class PowerUp extends GameButton {
 	
 	private int cost;
 	private String title;
+	public int usages = 0;
 	
 	public PowerUp (int cost, String title, int width, int height) {
 		super(title, width, height, 20);
@@ -25,5 +26,7 @@ public abstract class PowerUp extends GameButton {
 	public void setTitle(String title) {
 		this.setText(title);
 	}
+	
+	public abstract void changeCost();
 
 }

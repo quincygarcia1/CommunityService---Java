@@ -14,10 +14,13 @@ public class Model {
 	int hashSize = 40;
 	int score = 0;
 	int trashReciprocal = 6;
-	public ArrayList<cleanUpPlayers> autonomousPlayers = new ArrayList<cleanUpPlayers>();
-	public ArrayList<TrashList> trashHash = new ArrayList<TrashList>(hashSize);
-	private ArrayList<Integer> occupiedBuckets = new ArrayList<Integer>(hashSize);
+	int multiplier = 1;
+	protected ArrayList<cleanUpPlayers> autonomousPlayers = new ArrayList<cleanUpPlayers>();
+	protected ArrayList<TrashList> trashHash = new ArrayList<TrashList>(hashSize);
+	protected ArrayList<Integer> occupiedBuckets = new ArrayList<Integer>(hashSize);
 	protected int trashCount = 0;
+	private Collectable oldestCollectable = null;
+	private Collectable newestCollectable = null;
 	Random rand;
 	
 	protected GarbagePlayer movePlayer = new GarbagePlayer();
@@ -64,10 +67,30 @@ public class Model {
 		trashCount ++;
 	}
 	
-	private Collectable oldestTarget() {
+	private void targetAges() {
 		//To do: revise this method to work with the hashtable
-		
-		return null;
+		Collectable max = null;
+		Collectable min = null;
+		for (int i = 0; i < this.occupiedBuckets.size(); i ++) {
+			TrashList linkedList = trashHash.get(occupiedBuckets.get(i));
+			TrashList temp = linkedList;
+			while (temp != null) {
+				if (max == null) {
+					max = temp.getItem();
+				}
+				if (min == null) {
+					min = temp.getItem();
+				}
+				if (temp.getItem().getTime() < min.getTime()) {
+					min = temp.getItem();
+				} else if (temp.getItem().getTime() > max.getTime()) {
+					max = temp.getItem();
+				}
+				temp = temp.next;
+			}
+		}
+		oldestCollectable = max;
+		newestCollectable = min;
 	}
 	
 	protected Collectable checkProximity() {

@@ -18,7 +18,7 @@ public class TrashTimer extends Observable {
 	Random rand = new Random();
 	
 	public TrashTimer() {
-		offset = 10;
+		offset = 12;
 		this.secondsLeft = (rand.nextInt(this.offset/3) + 1) + (this.offset - (this.offset/4));
 		this.millisecondsLeft = rand.nextInt(1000);
 		this.setObservableState(secondsLeft + (millisecondsLeft/1000));
