@@ -14,12 +14,13 @@ import sprites.PileItem;
 import sprites.garbageItem;
 import utils.Action;
 import utils.Observer;
+import utils.ObserverPickup;
 import utils.TrashList;
 
-public class GameView implements Observer {
+public class GameView implements Observer, ObserverPickup {
 	
 	Stage stage;
-	Model model;
+	public Model model;
 	BorderPane borderPane;
 	GameController gamePane;
 	Random rand = new Random();
@@ -36,8 +37,7 @@ public class GameView implements Observer {
 			this.model = model;
 			this.commandQueue = new ArrayList<Action>();
 			this.timer = new TrashTimer();
-			timer.setObservingView(this);
-			this.timer.notifyObserver();
+			
 	}
 	//To do (May 6): start on the shop screen and create the power-ups.
 	//Consider changing the game font.
@@ -89,6 +89,8 @@ public class GameView implements Observer {
 		VBox box = new VBox(gamePane);
 		box.setAlignment(Pos.CENTER);
 		borderPane.setCenter(box);
+		timer.setObservingView(this);
+		this.timer.notifyObserver();
 	}
 	
 	protected void setLeftKey(Action action) {
@@ -166,6 +168,21 @@ public class GameView implements Observer {
 				}
 			}
 		});
+	}
+
+
+	@Override
+	public void update(Collectable observableState) {
+		// TODO Auto-generated method stub
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		        // Update UI here.
+		    	gamePane.removeElement(observableState);
+				model.movePlayer.setTarget(null);
+		    }
+		});
+		
 	}
 	
 }

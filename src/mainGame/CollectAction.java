@@ -28,15 +28,9 @@ public class CollectAction implements Action{
 		}
 		this.view.model.movePlayer.setTarget(res);
 		this.view.model.movePlayer.setCollecting(true);
-		Thread playerThread = this.view.model.startThread();
-		Thread thread = this.view.model.startGarbageThread();
-		if (thread != null) {
-			while(thread.isAlive());
-			while(playerThread.isAlive());
-			this.view.gamePane.removeElement(this.view.model.movePlayer.getTarget());
-			while(this.view.model.movePlayer.isCollecting());
-			this.view.model.movePlayer.setTarget(null);
-		}
+		res.setObservingView(view);
+		this.view.model.startThread();
+		this.view.model.startGarbageThread();
 	}
 
 	@Override

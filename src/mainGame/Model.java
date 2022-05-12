@@ -23,7 +23,7 @@ public class Model {
 	private Collectable newestCollectable = null;
 	Random rand;
 	
-	protected GarbagePlayer movePlayer = new GarbagePlayer();
+	public GarbagePlayer movePlayer = new GarbagePlayer();
 	
 	public void fillHash() {
 		for (int i = 0; i < hashSize; i++) {

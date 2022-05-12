@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import javafx.scene.image.Image;
+import utils.ObserverPickup;
 
 public class garbageItem extends Collectable implements Runnable{
 	
 	static Random rand = new Random();
 	private int animationSet;
+	private ObserverPickup view;
 
 	public garbageItem() {
 		super(new ArrayList<Image>(Arrays.asList(new Image("file:Images/Garbage1-Undamaged.png"), new Image("file:Images/Garbage1-SlightDamage.png"),
 				new Image("file:Images/Garbage1-Destroyed.png"), new Image("file:Images/Garbage2-Undamaged.png"), 
-				new Image("file:Images/Garbage2-Destroyed.png"))), rand.nextInt(3) + 2, 415);
+				new Image("file:Images/Garbage2-Destroyed.png"))), rand.nextInt(3) + 2, 390);
 		// TODO Auto-generated constructor stub
 		chooseSprite();
 	}
@@ -102,6 +104,25 @@ public class garbageItem extends Collectable implements Runnable{
 			}
 		}
 		System.out.print("finished");
+		notifyObserver();
+	}
+
+	@Override
+	public void setObservingView(ObserverPickup op) {
+		// TODO Auto-generated method stub
+		this.view = op;
+	}
+
+	@Override
+	public void notifyObserver() {
+		// TODO Auto-generated method stub
+		this.view.update(this);
+	}
+
+	@Override
+	public void removeObservingView(ObserverPickup op) {
+		// TODO Auto-generated method stub
+		this.view = null;
 	}
 	
 

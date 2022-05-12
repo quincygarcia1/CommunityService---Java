@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import utils.ObservablePickup;
 
-public abstract class Collectable extends Sprite implements Runnable {
+public abstract class Collectable extends Sprite implements Runnable, ObservablePickup {
 
 	static Random rand = new Random();
 	private int hp;
