@@ -7,10 +7,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import utils.GameButton;
+import utils.Resources;
 
 public class StartMenu extends GridPane{
 	
 	private final GameView view;
+	private Resources resources = new Resources();
 	
 	public StartMenu(GameView view) {
 		this.view = view;
@@ -22,7 +24,7 @@ public class StartMenu extends GridPane{
 	private void titling() {
 		Text title = new Text("Community Service");
 		title.setTextAlignment(TextAlignment.CENTER);
-		Font titleFont = Font.loadFont("file:ZenKurenaido-Regular.ttf", 40);
+		Font titleFont = resources.getMasterFont(40);
 		title.setFont(titleFont);
 		HBox box = new HBox(title);
 		box.setAlignment(Pos.CENTER);

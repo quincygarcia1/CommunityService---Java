@@ -63,6 +63,7 @@ public class garbageItem extends Collectable implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		this.setAssigned();
 		int time = (this.getHP() + rand.nextInt((this.getHP()/2) + 1)) * 900;
 		if (this.animationSet == 0){
 			try {

@@ -178,6 +178,7 @@ public class GameView implements Observer, ObserverPickup {
 		    @Override
 		    public void run() {
 		        // Update UI here.
+		    	
 		    	gamePane.removeElement(observableState);
 				model.movePlayer.setTarget(null);
 		    }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import sprites.Collectable;
+import sprites.Drone;
 import sprites.GarbagePlayer;
 import sprites.cleanUpPlayers;
 import utils.TrashList;
@@ -21,6 +22,8 @@ public class Model {
 	protected int trashCount = 0;
 	private Collectable oldestCollectable = null;
 	private Collectable newestCollectable = null;
+	private Collectable closestCollectable = null;
+	private Collectable furthestCollectable = null;
 	Random rand;
 	
 	public GarbagePlayer movePlayer = new GarbagePlayer();
@@ -31,16 +34,40 @@ public class Model {
 		}
 	}
 	
-	private Collectable findClosestToPlayer() {
-		//To do: complete this method to find the closest and farthest
-		//collectables from the player so that I can develop a scoring algorithm
-		return null;
+	private Collectable closestInList(TrashList list, cleanUpPlayers player) {
+		Collectable max = null;
+		TrashList temp = list;
+		while (temp != null) {
+			if ((Math.abs(temp.getItem().x - player.x) > Math.abs(player.x - max.x) || max == null) && !(temp.getItem().isAssigned())) {
+				max = temp.getItem();
+			}
+			temp = temp.next;
+		}
+		return max;
 	}
 	
-	public Thread startThread() {
+	private Collectable closestInHash(cleanUpPlayers player) {
+		Collectable max = null;
+		for (int i = 0; i < occupiedBuckets.size(); i ++) {
+			Collectable maxInBucket = closestInList(trashHash.get(occupiedBuckets.get(i)), player);
+			if (((Math.abs(maxInBucket.x - player.x) > Math.abs(max.x - player.x)) || max == null) && !(maxInBucket.isAssigned())) {
+				max = maxInBucket;
+			}
+		}
+		return max;
+	}
+	
+	protected void startDroneThread(Drone drone) {
+		Collectable newTarget = closestInHash(drone);
+		drone.setTarget(newTarget);
+		newTarget.setAssigned();
+		
+	}
+
+
+	public void startThread() {
 		Thread thread = new Thread(movePlayer);
 		thread.start();
-		return thread;
 	}
 	
 	public Thread startGarbageThread() {

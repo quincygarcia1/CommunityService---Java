@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 
 public class Drone extends cleanUpPlayers implements Runnable {
 
-	
 	static Random rand = new Random();
 	private Collectable target;
 	
@@ -24,13 +23,13 @@ public class Drone extends cleanUpPlayers implements Runnable {
 		this.target = null;
 	}
 	
-	public void move(double location) throws InterruptedException {
-		if (location < this.x) {
+	public void move(Collectable location) throws InterruptedException {
+		if (location.x < this.x) {
 			this.currentAnimationNum = 3;
 			changeAnimation();
 		}
-		while (Math.abs(this.x - location) > this.getDestructionRange()) {
-			if (location < this.x) {
+		while (Math.abs(this.x - location.x) > this.getDestructionRange()) {
+			if (location.x < this.x) {
 				moveTo(-5);
 				if (currentAnimationNum == 5) {
 					currentAnimationNum = 3;
@@ -46,6 +45,7 @@ public class Drone extends cleanUpPlayers implements Runnable {
 				}
 			}
 			changeAnimation();
+			Thread.sleep(15);
 		}
 		currentAnimationNum = 0;
 		changeAnimation();
@@ -66,9 +66,11 @@ public class Drone extends cleanUpPlayers implements Runnable {
 			return;
 		}
 		try {
-			move(this.target.x);
+			move(this.target);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
+			this.target.changeStatus();
+			this.setTarget(null);
 			return;
 		}
 		

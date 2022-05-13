@@ -49,8 +49,4 @@ public class GameController extends Pane {
 		this.getChildren().add(sprite);
 		this.getChildren().get(this.getChildren().size() - 1).toBack();
 	}
-	
-	public void update() {
-		
-	}
 }
