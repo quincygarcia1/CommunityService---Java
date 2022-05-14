@@ -70,11 +70,11 @@ public class Model {
 		thread.start();
 	}
 	
-	public Thread startGarbageThread() {
-		if (movePlayer.getTarget() == null) {
+	public Thread startGarbageThread(Collectable target) {
+		if (target == null) {
 			return null;
 		}
-		Thread thread = new Thread(movePlayer.getTarget());
+		Thread thread = new Thread(target);
 		thread.start();
 		
 		return thread;
@@ -150,13 +150,13 @@ public class Model {
 		System.out.println(divisor);
 		TrashList hash = trashHash.get(divisor);
 		TrashList temp = hash;
-		if ((temp != null) && temp.getItem().getXCenter() <= (this.movePlayer.x + this.movePlayer.getDestructionRange()) && temp.getItem().x >= (this.movePlayer.x - this.movePlayer.getDestructionRange())) {
+		if ((temp != null) && !(temp.getItem().isTaken()) && temp.getItem().getXCenter() <= (this.movePlayer.x + this.movePlayer.getDestructionRange()) && temp.getItem().x >= (this.movePlayer.x - this.movePlayer.getDestructionRange())) {
 			TrashList returnValue = temp;
 			trashHash.set(divisor, temp.next);
 			return returnValue.getItem();
 		}
 		while (temp != null && temp.next != null) {
-			if (temp.next.getItem().getXCenter() <= (this.movePlayer.x + this.movePlayer.getDestructionRange()) && temp.next.getItem().x >= (this.movePlayer.x - this.movePlayer.getDestructionRange())) {
+			if (!(temp.getItem().isTaken()) &&temp.next.getItem().getXCenter() <= (this.movePlayer.x + this.movePlayer.getDestructionRange()) && temp.next.getItem().x >= (this.movePlayer.x - this.movePlayer.getDestructionRange())) {
 				Collectable target = temp.next.getItem();
 				temp.next = temp.next.next;
 				return target;

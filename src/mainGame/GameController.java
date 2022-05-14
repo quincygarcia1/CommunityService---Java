@@ -11,6 +11,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import sprites.Collectable;
 import sprites.Sprite;
 
@@ -18,7 +19,7 @@ public class GameController extends Pane {
 
 	private final GameView view;
 	private final Model model;
-	
+	private Text scoreDisplay;
 	
 	public GameController(GameView view, Model model) {
 		this.view = view;
@@ -34,11 +35,13 @@ public class GameController extends Pane {
                    BackgroundSize.DEFAULT);
 		Background background = new Background(backgroundimage);
 		this.setBackground(background);
+		scoreDisplay = new Text(120, 690, "" + this.model.score);
 		createScreen();
 	}
 	
 	private void createScreen() {
 		this.getChildren().add(this.model.movePlayer);
+		this.getChildren().add(scoreDisplay);
 	}
 	
 	protected void removeElement(Sprite sprite) {

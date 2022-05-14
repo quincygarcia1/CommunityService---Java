@@ -148,6 +148,11 @@ public class GameView implements Observer, ObserverPickup {
 						temp = temp.next;
 					}
 				}
+				for (int j = 0; j < model.autonomousPlayers.size(); j ++) {
+					if (model.autonomousPlayers.get(j).getTarget() == null) {
+						
+					}
+				}
 				if (observableState == 0.0) {
 					timer.stopTimer();
 					timer.resetTimer();
@@ -178,9 +183,10 @@ public class GameView implements Observer, ObserverPickup {
 		    @Override
 		    public void run() {
 		        // Update UI here.
-		    	
-		    	gamePane.removeElement(observableState);
-				model.movePlayer.setTarget(null);
+		    	if (observableState.getCollectedMethod()) {
+		    		gamePane.removeElement(observableState);
+					model.movePlayer.setTarget(null);
+		    	}
 		    }
 		});
 		

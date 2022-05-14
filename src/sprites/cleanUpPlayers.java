@@ -11,6 +11,7 @@ public abstract class cleanUpPlayers extends Sprite implements Move{
 	
 	private double destructionRange;
 	private double translateTime;
+	private Collectable target;
 
 	public cleanUpPlayers(ArrayList<Image> spriteImages, double x, double y, double translateTime, double destructionRange) {
 		super(spriteImages, x, y);
@@ -38,6 +39,14 @@ public abstract class cleanUpPlayers extends Sprite implements Move{
 	
 	public double getDestructionRange() {
 		return this.destructionRange;
+	}
+	
+	public void setTarget(Collectable target) {
+		this.target = target;
+	}
+	
+	public Collectable getTarget() {
+		return this.target;
 	}
 	
 	public double distanceBetween(Sprite piece) {

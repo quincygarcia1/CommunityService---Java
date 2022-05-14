@@ -29,8 +29,9 @@ public class CollectAction implements Action{
 		this.view.model.movePlayer.setTarget(res);
 		this.view.model.movePlayer.setCollecting(true);
 		res.setObservingView(view);
+		res.setByPlayer();
 		this.view.model.startThread();
-		this.view.model.startGarbageThread();
+		this.view.model.startGarbageThread(this.view.model.movePlayer.getTarget());
 	}
 
 	@Override

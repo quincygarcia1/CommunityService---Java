@@ -13,12 +13,21 @@ public abstract class Collectable extends Sprite implements Runnable, Observable
 	private float time;
 	private boolean assigned = false;
 	private boolean taken = false;
+	private boolean collectedByPlayer = false;
 	
 	
 	public Collectable(ArrayList<Image> spriteImages, int hp, int y) {
 		super(spriteImages, rand.nextInt(1200), y);
 		this.hp = hp;
 		this.time = 0;
+	}
+	
+	public void setByPlayer() {
+		this.collectedByPlayer = true;
+	}
+	
+	public boolean getCollectedMethod() {
+		return this.collectedByPlayer;
 	}
 	
 	public int getHP() {

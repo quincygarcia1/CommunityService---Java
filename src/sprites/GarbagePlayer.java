@@ -12,7 +12,6 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	private boolean direction;
 	private boolean activeAnimation = false;
 	private boolean collecting = false;
-	private Collectable targetItem;
 	private Collectable tempItem; //used to keep the target item if the thread sets the target to null early
 	private int multiplier = 900;
 	private int movementSpeed = 4;
@@ -91,13 +90,15 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 	}
 	
 	public void setTarget(Collectable target) {
-		this.targetItem = target;
-		this.tempItem = target;
+		super.setTarget(target);
+		if (target == null) {
+			return;
+		}
+		tempItem = target;
+		this.tempItem.setHP(target.getHP());
 	}
 	
-	public Collectable getTarget() {
-		return this.targetItem;
-	}
+	
 	
 	private void changeAnimation() {
 		this.setImage(this.spriteImages.get(currentAnimationNum));

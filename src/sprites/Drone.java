@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 public class Drone extends cleanUpPlayers implements Runnable {
 
 	static Random rand = new Random();
-	private Collectable target;
 	
 	public Drone() {
 		
@@ -20,10 +19,13 @@ public class Drone extends cleanUpPlayers implements Runnable {
 		this.spriteImages = new ArrayList<Image>(Arrays.asList(new Image("file:Images/drone_r2.png"), new Image("file:Images/drone_r3.png"),
 				new Image("file:Images/drone_r1.png"), new Image("file:Images/drone_l2.png"),
 				new Image("file:Images/drone_l3.png"), new Image("file:Images/drone_l1.png")));
-		this.target = null;
+		this.setTarget(null);
 	}
 	
 	public void move(Collectable location) throws InterruptedException {
+		if (location == null) {
+			return;
+		}
 		if (location.x < this.x) {
 			this.currentAnimationNum = 3;
 			changeAnimation();
@@ -45,34 +47,46 @@ public class Drone extends cleanUpPlayers implements Runnable {
 				}
 			}
 			changeAnimation();
-			Thread.sleep(15);
+			Thread.sleep(170);
 		}
 		currentAnimationNum = 0;
 		changeAnimation();
+		if (this.getTarget() != null) {
+			this.getTarget().changeStatus();
+		}
+		
 	}
 	
 	private void changeAnimation() {
 		this.setImage(this.spriteImages.get(currentAnimationNum));
 	}
 	
-	public void setTarget(Collectable target) {
-		this.target = target;
-	}
+
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		if (this.target == null) {
+		if (this.getTarget() == null) {
 			return;
 		}
+		this.getTarget().setAssigned();
 		try {
-			move(this.target);
+			move(this.getTarget());
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			this.target.changeStatus();
 			this.setTarget(null);
 			return;
 		}
+		Thread thread = new Thread(this.getTarget());
+		thread.start();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		this.setTarget(null);
 		
 	}
 }
