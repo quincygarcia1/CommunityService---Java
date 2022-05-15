@@ -39,14 +39,6 @@ public class GameView implements Observer, ObserverPickup {
 			this.timer = new TrashTimer();
 			
 	}
-	//To do (May 6): start on the shop screen and create the power-ups.
-	//Consider changing the game font.
-	//When completed, consider adding a mode where you click to move
-	
-	
-	//To do: Create a method to update the game view when a change in sprites occurs.
-	//There's a few ways to do this but the preferred method so far is to use the
-	//observable/observer pattern
 	
 	public void initStart() {
 		borderPane = new BorderPane();
@@ -120,7 +112,7 @@ public class GameView implements Observer, ObserverPickup {
 		this.gamePane.addElement(newElement.getItem());
 	}
 	
-	protected Collectable collectNearest() {
+	public Collectable collectNearest() {
 		Collectable nearest = this.model.checkProximity();
 		if (nearest == null) {
 			return null;
@@ -183,10 +175,11 @@ public class GameView implements Observer, ObserverPickup {
 		    @Override
 		    public void run() {
 		        // Update UI here.
-		    	if (observableState.getCollectedMethod()) {
-		    		gamePane.removeElement(observableState);
-					model.movePlayer.setTarget(null);
+		    	if (!(observableState.getCollectedMethod())) {
+		    		model.removeFromHash(observableState);
 		    	}
+		    	gamePane.removeElement(observableState);
+				model.movePlayer.setTarget(null);
 		    }
 		});
 		

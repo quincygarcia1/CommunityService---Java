@@ -1,8 +1,8 @@
-package mainGame;
+package utils;
 
 import javafx.scene.input.KeyCode;
+import mainGame.GameView;
 import sprites.Collectable;
-import utils.Action;
 
 public class CollectAction implements Action{
 	
