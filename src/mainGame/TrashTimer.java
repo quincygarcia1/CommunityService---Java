@@ -73,5 +73,9 @@ public class TrashTimer extends Observable {
 		this.hasStarted = false;
 	}
 	
+	public void changeOffset(int newOffset) {
+		this.offset = newOffset;
+	}
+	
 	
 }

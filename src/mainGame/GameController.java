@@ -42,7 +42,7 @@ public class GameController extends Pane {
 		shopButton = new GameButton("Shop", 78, 8, 10);
 		shopButton.setLayoutX(10);
 		shopButton.setLayoutY(640);
-		shopButton.setFocusTraversable(false);
+		
 		createScreen();
 	}
 	

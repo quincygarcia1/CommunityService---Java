@@ -7,11 +7,12 @@ public class DronePowerUp extends PowerUp{
 	
 	private static DronePowerUp instance;
 	private int usages = 0;
-	private ArrayList<Integer> costList = (ArrayList<Integer>) List.of(100, 700, 4000, 14000); 
+	private List<Integer> costList = List.of(100, 700, 4000, 14000); 
 
 	private DronePowerUp() {
-		super(100, "Get Drone", 100, 30);
+		super(100, "", 100, 30);
 		// TODO Auto-generated constructor stub
+		setTitle();
 	}
 	
 	public static DronePowerUp getInstance() {
@@ -25,12 +26,19 @@ public class DronePowerUp extends PowerUp{
 		return instance;
 	}
 	
+	private void setTitle() {
+		this.setTitle("" + this.costList.get(usages));
+	}
+	
 	public void changeCost() {
-		this.setCost(this.costList.get(usages + 1));
+		if (usages != 3) {
+			this.setCost(this.costList.get(usages + 1));
+		}
 		this.usages ++;
 		if (usages == 4) {
 			this.setDisable(true);
 		}
+		setTitle();
 	}
 
 

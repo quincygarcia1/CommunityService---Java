@@ -12,7 +12,7 @@ import utils.Resources;
 public class StartMenu extends GridPane{
 	
 	private final GameView view;
-	private Resources resources = new Resources();
+	
 	
 	public StartMenu(GameView view) {
 		this.view = view;
@@ -24,7 +24,7 @@ public class StartMenu extends GridPane{
 	private void titling() {
 		Text title = new Text("Community Service");
 		title.setTextAlignment(TextAlignment.CENTER);
-		Font titleFont = resources.getMasterFont(40);
+		Font titleFont = Resources.getMasterFont(40);
 		title.setFont(titleFont);
 		HBox box = new HBox(title);
 		box.setAlignment(Pos.CENTER);

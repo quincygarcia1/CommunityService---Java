@@ -19,6 +19,10 @@ public abstract class PowerUp extends GameButton {
 		return this.cost;
 	}
 	
+	public String getTitle() {
+		return this.title;
+	}
+	
 	public void setCost(int newCost) {
 		this.cost = newCost;
 	}
@@ -28,5 +32,4 @@ public abstract class PowerUp extends GameButton {
 	}
 	
 	public abstract void changeCost();
-
 }

@@ -84,6 +84,11 @@ public class GameView implements Observer, ObserverPickup {
 	
 	protected void showGameScreen() {
 		gamePane = new GameController(this, model);
+		shop.exitButton.setOnMouseClicked(e -> {
+			VBox box = new VBox(gamePane);
+			box.setAlignment(Pos.CENTER);
+			borderPane.setCenter(box);
+		});
 		gamePane.shopButton.setOnMouseClicked(e -> {
 			VBox box = new VBox(shop);
 			box.setAlignment(Pos.CENTER);
@@ -123,7 +128,7 @@ public class GameView implements Observer, ObserverPickup {
 		this.gamePane.addElement(newElement.getItem());
 	}
 	
-	protected Collectable collectNearest() {
+	public Collectable collectNearest() {
 		Collectable nearest = this.model.checkProximity();
 		if (nearest == null) {
 			return null;
