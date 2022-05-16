@@ -3,7 +3,6 @@ package mainGame;
 import javafx.application.Application;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-import utils.CollectAction;
 import utils.LeftAction;
 import utils.RightAction;
 
