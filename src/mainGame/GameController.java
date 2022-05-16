@@ -14,12 +14,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import sprites.Collectable;
 import sprites.Sprite;
+import utils.GameButton;
 
 public class GameController extends Pane {
 
 	private final GameView view;
 	private final Model model;
 	private Text scoreDisplay;
+	protected GameButton shopButton;
+	protected boolean shopOpen = false;
 	
 	public GameController(GameView view, Model model) {
 		this.view = view;
@@ -36,16 +39,25 @@ public class GameController extends Pane {
 		Background background = new Background(backgroundimage);
 		this.setBackground(background);
 		scoreDisplay = new Text(120, 690, "" + this.model.score);
+		shopButton = new GameButton("Shop", 78, 8, 10);
+		shopButton.setLayoutX(10);
+		shopButton.setLayoutY(640);
+		shopButton.setFocusTraversable(false);
 		createScreen();
 	}
 	
 	private void createScreen() {
+		this.getChildren().add(shopButton);
 		this.getChildren().add(this.model.movePlayer);
 		this.getChildren().add(scoreDisplay);
 	}
 	
 	protected void removeElement(Sprite sprite) {
 		this.getChildren().remove(sprite);
+	}
+	
+	protected void updateScoreLabel() {
+		this.scoreDisplay.setText("" + this.view.model.score);
 	}
 	
 	protected void addElement(Sprite sprite) {

@@ -57,13 +57,20 @@ public class Model {
 		return max;
 	}
 	
-	protected void startDroneThread(Drone drone) {
-		Collectable newTarget = closestInHash(drone);
-		drone.setTarget(newTarget);
+	protected void startDroneThread(cleanUpPlayers cleanUpPlayers) {
+		Collectable newTarget = closestInHash(cleanUpPlayers);
+		cleanUpPlayers.setTarget(newTarget);
 		newTarget.setAssigned();
 		
 	}
 
+	public void initializeDrone() {
+		Drone newDrone = new Drone();
+		if (this.autonomousPlayers.size() == 4) {
+			return;
+		}
+		this.autonomousPlayers.set(this.autonomousPlayers.size(), newDrone);
+	}
 
 	public void startThread() {
 		Thread thread = new Thread(movePlayer);
@@ -90,8 +97,13 @@ public class Model {
 		newElement.next = trashHash.get(hashVal);
 		System.out.println(hashVal);
 		trashHash.set(hashVal, newElement);
-		occupiedBuckets.add(hashVal);
+		if (!(occupiedBuckets.contains(hashVal))) {
+			occupiedBuckets.add(hashVal);
+		}
 		trashCount ++;
+		if (oldestCollectable == null && newestCollectable == null) {
+			targetAges();
+		}
 	}
 	
 	private void targetAges() {
@@ -130,19 +142,46 @@ public class Model {
 				return null;
 			}
 			if (bottomBound == null && upperBound != null) {
+				if ((oldestCollectable != null && upperBound.getXCenter() == oldestCollectable.getXCenter()) ||
+						(newestCollectable != null && upperBound.getXCenter() == newestCollectable.getXCenter())) {
+					targetAges();
+				}
 				return upperBound;
 			} else if (bottomBound != null && upperBound == null) {
-				System.out.println(bottomBound.x);
+				if ((oldestCollectable != null && bottomBound.getXCenter() == oldestCollectable.getXCenter()) ||
+						(newestCollectable != null && bottomBound.getXCenter() == newestCollectable.getXCenter())) {
+					targetAges();
+				}
 				return bottomBound;
 			}
 			if (Math.abs(this.movePlayer.x - bottomBound.x) > Math.abs(this.movePlayer.x - upperBound.x)) {
 				System.out.println(bottomBound.x);
+				TrashList reinsertedElement = new TrashList(upperBound);
+				registerTrash(reinsertedElement);
+				if ((oldestCollectable != null && bottomBound.getXCenter() == oldestCollectable.getXCenter()) ||
+						(newestCollectable != null && bottomBound.getXCenter() == newestCollectable.getXCenter())) {
+					targetAges();
+				}
 				return bottomBound;
 			}
 			System.out.println(upperBound.x);
+			TrashList reinsertedElement = new TrashList(bottomBound);
+			registerTrash(reinsertedElement);
+			if ((oldestCollectable != null && upperBound.getXCenter() == oldestCollectable.getXCenter()) ||
+					(newestCollectable != null && upperBound.getXCenter() == newestCollectable.getXCenter())) {
+				targetAges();
+			}
 			return upperBound;
 		} else {
-			return hashDivisor((int)(Math.round(divisor) * this.movePlayer.getDestructionRange()) % hashSize);
+			Collectable res = hashDivisor((int)(Math.round(divisor) * this.movePlayer.getDestructionRange()) % hashSize);
+			if (res == null) {
+				return null;
+			}
+			if ((oldestCollectable != null && res.getXCenter() == oldestCollectable.getXCenter()) ||
+					(newestCollectable != null && res.getXCenter() == newestCollectable.getXCenter())) {
+				targetAges();
+			}
+			return res;
 		}
 	}
 	
@@ -166,6 +205,22 @@ public class Model {
 		return null;
 	}
 	
+	protected void removeFromHash(Collectable item) {
+		int hashVal = hash(item.getXCenter()) % hashSize;
+		TrashList bucket = this.trashHash.get(hashVal);
+		TrashList temp = bucket;
+		if (temp != null && temp.getItem().getXCenter() == item.getXCenter()) {
+			trashHash.set(hashVal, temp.next);
+		}
+		while (temp != null && temp.next != null) {
+			if (temp.next.getItem().getXCenter() == item.getXCenter()) {
+				temp.next = temp.next.next;
+				return;
+			}
+			temp = temp.next;
+		}
+	}
+			
 	private int hash(double val) {
 		return (int)(Math.round(val/movePlayer.getDestructionRange()) * movePlayer.getDestructionRange());
 	}
@@ -185,5 +240,6 @@ public class Model {
 	public int getReciprocal() {
 		return this.trashReciprocal;
 	}
+	
 	
 }

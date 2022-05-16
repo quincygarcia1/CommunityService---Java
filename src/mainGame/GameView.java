@@ -22,6 +22,7 @@ public class GameView implements Observer, ObserverPickup {
 	Stage stage;
 	public Model model;
 	BorderPane borderPane;
+	ShopPane shop;
 	GameController gamePane;
 	Random rand = new Random();
 	boolean gameStarted = false;
@@ -39,9 +40,6 @@ public class GameView implements Observer, ObserverPickup {
 			this.timer = new TrashTimer();
 			
 	}
-	//To do (May 6): start on the shop screen and create the power-ups.
-	//Consider changing the game font.
-	//When completed, consider adding a mode where you click to move
 	
 	
 	//To do: Create a method to update the game view when a change in sprites occurs.
@@ -72,7 +70,7 @@ public class GameView implements Observer, ObserverPickup {
 				this.commandQueue.remove(collectKey);
 			}
 		});
-		
+		shop = new ShopPane(this);
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -86,6 +84,11 @@ public class GameView implements Observer, ObserverPickup {
 	
 	protected void showGameScreen() {
 		gamePane = new GameController(this, model);
+		gamePane.shopButton.setOnMouseClicked(e -> {
+			VBox box = new VBox(shop);
+			box.setAlignment(Pos.CENTER);
+			borderPane.setCenter(box);
+		});
 		VBox box = new VBox(gamePane);
 		box.setAlignment(Pos.CENTER);
 		borderPane.setCenter(box);
@@ -150,7 +153,7 @@ public class GameView implements Observer, ObserverPickup {
 				}
 				for (int j = 0; j < model.autonomousPlayers.size(); j ++) {
 					if (model.autonomousPlayers.get(j).getTarget() == null) {
-						
+						model.startDroneThread(model.autonomousPlayers.get(j));
 					}
 				}
 				if (observableState == 0.0) {
@@ -183,10 +186,11 @@ public class GameView implements Observer, ObserverPickup {
 		    @Override
 		    public void run() {
 		        // Update UI here.
-		    	if (observableState.getCollectedMethod()) {
-		    		gamePane.removeElement(observableState);
-					model.movePlayer.setTarget(null);
+		    	if (!(observableState.getCollectedMethod())) {
+		    		model.removeFromHash(observableState);
 		    	}
+		    	gamePane.removeElement(observableState);
+				model.movePlayer.setTarget(null);
 		    }
 		});
 		
