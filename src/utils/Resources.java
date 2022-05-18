@@ -20,5 +20,11 @@ public class Resources {
 		returnedText.setFont(getMasterFont(15));
 		return returnedText;
 	}
+	
+	public static Text getTitleText(String text) {
+		Text returnedText = new Text(text);
+		returnedText.setFont(getMasterFont(40));
+		return returnedText;
+	}
 
 }

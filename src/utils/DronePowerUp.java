@@ -3,23 +3,25 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import mainGame.GameView;
+
 public class DronePowerUp extends PowerUp{
 	
 	private static DronePowerUp instance;
 	private int usages = 0;
 	private List<Integer> costList = List.of(100, 700, 4000, 14000); 
 
-	private DronePowerUp() {
-		super(100, "", 100, 30);
+	private DronePowerUp(GameView view) {
+		super(100, "", 100, 30, view);
 		// TODO Auto-generated constructor stub
 		setTitle();
 	}
 	
-	public static DronePowerUp getInstance() {
+	public static DronePowerUp getInstance(GameView view) {
 		if (instance == null) {
 			synchronized(DronePowerUp.class) {
 				if (instance == null) {
-					instance = new DronePowerUp();
+					instance = new DronePowerUp(view);
 				}
 			}
 		}

@@ -3,6 +3,8 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import mainGame.GameView;
+
 public class MultiplierPowerUp extends PowerUp{
 
 	private static MultiplierPowerUp instance;
@@ -10,17 +12,17 @@ public class MultiplierPowerUp extends PowerUp{
 	private List<Integer> multipliers = List.of(4, 16, 64, 256);
 	private int currentMultiplier = 1;
 	
-	private MultiplierPowerUp() {
-		super(20, "", 100, 30);
+	private MultiplierPowerUp(GameView view) {
+		super(20, "", 100, 30, view);
 		// TODO Auto-generated constructor stub
 		setTitle();
 	}
 	
-	public static MultiplierPowerUp getInstance() {
+	public static MultiplierPowerUp getInstance(GameView view) {
 		if (instance == null) {
 			synchronized(DronePowerUp.class) {
 				if (instance == null) {
-					instance = new MultiplierPowerUp();
+					instance = new MultiplierPowerUp(view);
 				}
 			}
 		}

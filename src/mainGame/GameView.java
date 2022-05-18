@@ -85,6 +85,7 @@ public class GameView implements Observer, ObserverPickup {
 	protected void showGameScreen() {
 		gamePane = new GameController(this, model);
 		shop.exitButton.setOnMouseClicked(e -> {
+			System.out.print("test");
 			VBox box = new VBox(gamePane);
 			box.setAlignment(Pos.CENTER);
 			borderPane.setCenter(box);

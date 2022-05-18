@@ -3,6 +3,8 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import mainGame.GameView;
+
 public class SpawnRatePowerUp extends PowerUp {
 	
 	private static SpawnRatePowerUp instance;
@@ -10,16 +12,16 @@ public class SpawnRatePowerUp extends PowerUp {
 	private List<Integer> offsets = List.of(11, 10, 9);
 	private int currentOffset = 12;
 	
-	private SpawnRatePowerUp() {
-		super(15, "", 100, 30);
+	private SpawnRatePowerUp(GameView view) {
+		super(15, "", 100, 30, view);
 		setTitle();
 	}
 	
-	public static SpawnRatePowerUp getInstance() {
+	public static SpawnRatePowerUp getInstance(GameView view) {
 		if (instance == null) {
 			synchronized(SpawnRatePowerUp.class) {
 				if (instance == null) {
-					instance = new SpawnRatePowerUp();
+					instance = new SpawnRatePowerUp(view);
 				}
 			}
 		}
@@ -33,12 +35,12 @@ public class SpawnRatePowerUp extends PowerUp {
 	@Override
 	public void changeCost() {
 		// TODO Auto-generated method stub
-		if (usages != 3) {
+		if (usages != 2) {
 			this.setCost(this.costList.get(usages + 1));
 		}
 		currentOffset = offsets.get(usages); 
 		usages ++;
-		if (usages == 4) {
+		if (usages == 3) {
 			this.setDisable(true);
 		}
 		setTitle();

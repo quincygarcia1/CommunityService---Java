@@ -3,15 +3,18 @@ package utils;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
+import mainGame.GameView;
 
 public abstract class PowerUp extends GameButton {
 	
 	private int cost;
 	private String title;
 	public int usages = 0;
+	public GameView view;
 	
-	public PowerUp (int cost, String title, int width, int height) {
+	public PowerUp (int cost, String title, int width, int height, GameView view) {
 		super(title, width, height, 20);
+		this.view = view;
 		this.cost = cost;
 	}
 	

@@ -2,6 +2,8 @@ package utils;
 
 import java.util.List;
 
+import mainGame.GameView;
+
 public class MovementPowerUp extends PowerUp{
 
 	private static MovementPowerUp instance;
@@ -9,17 +11,17 @@ public class MovementPowerUp extends PowerUp{
 	private List<Integer> speeds = List.of(5, 6, 7, 8);
 	private int currentSpeed = 4;
 	
-	public MovementPowerUp() {
-		super(40, "", 100, 30);
+	public MovementPowerUp(GameView view) {
+		super(40, "", 100, 30, view);
 		// TODO Auto-generated constructor stub
 		setTitle();
 	}
 	
-	public static MovementPowerUp getInstance() {
+	public static MovementPowerUp getInstance(GameView view) {
 		if (instance == null) {
 			synchronized(MovementPowerUp.class) {
 				if (instance == null) {
-					instance = new MovementPowerUp();
+					instance = new MovementPowerUp(view);
 				}
 			}
 		}
