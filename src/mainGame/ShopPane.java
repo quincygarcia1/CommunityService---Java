@@ -60,12 +60,12 @@ public class ShopPane extends GridPane{
 			button = DronePowerUp.getInstance(this.view);
 		} else if (powerUpType == "range") {
 			button = IncreaseRangePowerUp.getInstance(this.view);
-			button.setOnMouseClicked(e -> button.event());
 		} else if (powerUpType == "multiplier") {
 			button = MultiplierPowerUp.getInstance(this.view);
 		} else {
 			button = SpawnRatePowerUp.getInstance(this.view);
 		}
+		button.setOnMouseClicked(e -> button.event());
 		HBox buttonBox = createCollection(Pos.CENTER_RIGHT, button, 100);
 		int currentRow = this.getRowCount();
 		this.add(descriptionBox, 0, currentRow);
