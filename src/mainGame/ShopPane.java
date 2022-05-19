@@ -40,9 +40,9 @@ public class ShopPane extends GridPane{
 		
 		addSection("Drones", "Get a drone that will automatically seek out and destroy garbage. Limit of 4.", "drone");
 		addSection("Collection Range", "Increase the range in which you can collect garbage. 3 tiers.", "range");
-		addSection("Movement Speed", "Increases the movement speed of the player character. 4 tiers", "move");
-		addSection("Score Multiplier", "Increase your multiplier when you collect garbage. 4 tiers", "multiplier");
-		addSection("Spawn Rate", "Garbage spawns at a faster rate. 3 tiers", "spawn");
+		addSection("Movement Speed", "Increases the movement speed of the player character. 4 tiers.", "move");
+		addSection("Score Multiplier", "Increase your multiplier when you collect garbage. 4 tiers.", "multiplier");
+		addSection("Spawn Rate", "Garbage spawns at a faster rate. 3 tiers.", "spawn");
 
 		this.setVgap(10);
 		
@@ -60,6 +60,7 @@ public class ShopPane extends GridPane{
 			button = DronePowerUp.getInstance(this.view);
 		} else if (powerUpType == "range") {
 			button = IncreaseRangePowerUp.getInstance(this.view);
+			button.setOnMouseClicked(e -> button.event());
 		} else if (powerUpType == "multiplier") {
 			button = MultiplierPowerUp.getInstance(this.view);
 		} else {

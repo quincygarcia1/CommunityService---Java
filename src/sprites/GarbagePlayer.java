@@ -77,6 +77,10 @@ public class GarbagePlayer extends cleanUpPlayers implements Runnable {
 		this.direction = goingRight;
 	}
 	
+	public void setSpeed(int newSpeed) {
+		this.movementSpeed = newSpeed;
+	}
+	
 	public void setCollecting(boolean status) {
 		this.collecting = status;
 	}

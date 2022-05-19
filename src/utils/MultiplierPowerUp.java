@@ -50,5 +50,15 @@ public class MultiplierPowerUp extends PowerUp{
 	public int getMultiplier() {
 		return this.currentMultiplier;
 	}
+
+	@Override
+	public void event() {
+		// TODO Auto-generated method stub
+		if (this.view.model.getScore() < this.getCost()) {
+			return;
+		}
+		this.changeCost();
+		this.view.model.setMultiplier(currentMultiplier);
+	}
 	
 }

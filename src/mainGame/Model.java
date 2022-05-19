@@ -38,7 +38,7 @@ public class Model {
 		Collectable max = null;
 		TrashList temp = list;
 		while (temp != null) {
-			if ((Math.abs(temp.getItem().x - player.x) > Math.abs(player.x - max.x) || max == null) && !(temp.getItem().isAssigned())) {
+			if (max == null || (Math.abs(temp.getItem().x - player.x) < Math.abs(player.x - max.x)) && !(temp.getItem().isAssigned())) {
 				max = temp.getItem();
 			}
 			temp = temp.next;
@@ -46,30 +46,48 @@ public class Model {
 		return max;
 	}
 	
+	protected void findDistRange() {
+		for (int i = 0; i < occupiedBuckets.size(); i ++) {
+			TrashList currentBucket = trashHash.get(occupiedBuckets.get(i));
+			TrashList temp = currentBucket;
+			while (temp != null) {
+				if (furthestCollectable == null) {
+					furthestCollectable = temp.getItem();
+				} else if (((Math.abs(temp.getItem().x - movePlayer.x) > Math.abs(furthestCollectable.x - movePlayer.x))) && !(temp.getItem().isAssigned())) {
+					furthestCollectable = temp.getItem();
+				}
+				temp = temp.next;
+			}
+		}
+		closestCollectable = closestInHash(this.movePlayer);
+	}
+	
 	private Collectable closestInHash(cleanUpPlayers player) {
 		Collectable max = null;
 		for (int i = 0; i < occupiedBuckets.size(); i ++) {
 			Collectable maxInBucket = closestInList(trashHash.get(occupiedBuckets.get(i)), player);
-			if (((Math.abs(maxInBucket.x - player.x) > Math.abs(max.x - player.x)) || max == null) && !(maxInBucket.isAssigned())) {
+			if ((max == null || (Math.abs(maxInBucket.x - player.x) < Math.abs(max.x - player.x))) && !(maxInBucket.isAssigned())) {
 				max = maxInBucket;
 			}
 		}
 		return max;
 	}
 	
-	protected void startDroneThread(cleanUpPlayers cleanUpPlayers) {
-		Collectable newTarget = closestInHash(cleanUpPlayers);
-		cleanUpPlayers.setTarget(newTarget);
+	protected void startDroneThread(cleanUpPlayers drone) {
+		Collectable newTarget = closestInHash(drone);
+		drone.setTarget(newTarget);
 		newTarget.setAssigned();
 		
 	}
 
-	public void initializeDrone() {
+	public Drone initializeDrone() {
 		Drone newDrone = new Drone();
 		if (this.autonomousPlayers.size() == 4) {
-			return;
+			return null;
 		}
-		this.autonomousPlayers.set(this.autonomousPlayers.size(), newDrone);
+		int index = this.autonomousPlayers.size();
+		this.autonomousPlayers.set(index, newDrone);
+		return (Drone)autonomousPlayers.get(index);
 	}
 
 	public void startThread() {
@@ -103,6 +121,12 @@ public class Model {
 		trashCount ++;
 		if (oldestCollectable == null && newestCollectable == null) {
 			targetAges();
+		} else if (closestCollectable == null && furthestCollectable == null) {
+			findDistRange();
+		} else if (Math.abs(newElement.getItem().x - movePlayer.x) < Math.abs(closestCollectable.x - movePlayer.x)) {
+			closestCollectable = newElement.getItem();
+		} else if (Math.abs(newElement.getItem().x - movePlayer.x) > Math.abs(furthestCollectable.x - movePlayer.x)) {
+			furthestCollectable = newElement.getItem();
 		}
 	}
 	
@@ -185,6 +209,8 @@ public class Model {
 		}
 	}
 	
+	
+	
 	private Collectable hashDivisor(int divisor) {
 		System.out.println(divisor);
 		TrashList hash = trashHash.get(divisor);
@@ -211,14 +237,51 @@ public class Model {
 		TrashList temp = bucket;
 		if (temp != null && temp.getItem().getXCenter() == item.getXCenter()) {
 			trashHash.set(hashVal, temp.next);
-		}
-		while (temp != null && temp.next != null) {
-			if (temp.next.getItem().getXCenter() == item.getXCenter()) {
-				temp.next = temp.next.next;
-				return;
+			addPoints(temp.getItem());
+			return;
+		} else {
+			while (temp != null && temp.next != null) {
+				if (temp.next.getItem().getXCenter() == item.getXCenter()) {
+					addPoints(item);
+					temp.next = temp.next.next;
+					return;
+				}
+				temp = temp.next;
 			}
-			temp = temp.next;
 		}
+		
+		if (item.x == closestCollectable.x) {
+			closestCollectable = null;
+			findDistRange();
+		} else if (item.x == furthestCollectable.x) {
+			furthestCollectable = null;
+			findDistRange();
+		}
+	}
+	
+	protected void addPoints(Collectable item) {
+		if (!(item.getCollectedMethod())) {
+			this.score += multiplier;
+			return;
+		}
+		double multiplicationFactor = 1 + additionalPoints(item);
+		this.score += multiplier * multiplicationFactor;
+		System.out.println("adding score " + multiplier * multiplicationFactor);
+		
+	}
+	
+	private double additionalPoints(Collectable item) {
+		double numerator = getReciprocalRepresentation(item);
+		double denominator = Math.abs(getReciprocalRepresentation(closestCollectable) - getReciprocalRepresentation(furthestCollectable));
+		if (denominator == 0) {
+			return 2;
+		}
+		return (double)(numerator / denominator);
+	}
+	
+	private double getReciprocalRepresentation(Collectable item) {
+		return ((double)(10/3) * (double)(1/item.getTime())) *
+				((double)(50/3) * (double)(1/Math.abs(item.x - movePlayer.x)));
 	}
 			
 	private int hash(double val) {
@@ -241,5 +304,8 @@ public class Model {
 		return this.trashReciprocal;
 	}
 	
+	public void setMultiplier(int newMultiplier) {
+		this.multiplier = newMultiplier;
+	}
 	
 }

@@ -50,4 +50,14 @@ public class MovementPowerUp extends PowerUp{
 		return this.currentSpeed;
 	}
 
+	@Override
+	public void event() {
+		// TODO Auto-generated method stub
+		if (this.view.model.getScore() < this.getCost()) {
+			return;
+		}
+		this.changeCost();
+		this.view.model.movePlayer.setSpeed(currentSpeed);
+	}
+
 }

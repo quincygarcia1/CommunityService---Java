@@ -35,4 +35,5 @@ public abstract class PowerUp extends GameButton {
 	}
 	
 	public abstract void changeCost();
+	public abstract void event();
 }

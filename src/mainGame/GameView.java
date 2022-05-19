@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sprites.Collectable;
+import sprites.Drone;
 import sprites.PileItem;
 import sprites.garbageItem;
 import utils.Action;
@@ -30,7 +31,7 @@ public class GameView implements Observer, ObserverPickup {
 	private Action rightKey;
 	private Action collectKey;
 	private ArrayList<Action> commandQueue;
-	private TrashTimer timer;
+	public TrashTimer timer;
 	
 		
 	public GameView(Stage stage, Model model) {
@@ -85,7 +86,6 @@ public class GameView implements Observer, ObserverPickup {
 	protected void showGameScreen() {
 		gamePane = new GameController(this, model);
 		shop.exitButton.setOnMouseClicked(e -> {
-			System.out.print("test");
 			VBox box = new VBox(gamePane);
 			box.setAlignment(Pos.CENTER);
 			borderPane.setCenter(box);
@@ -100,6 +100,11 @@ public class GameView implements Observer, ObserverPickup {
 		borderPane.setCenter(box);
 		timer.setObservingView(this);
 		this.timer.notifyObserver();
+	}
+	
+	public void newDrone() {
+		Drone newDrone = this.model.initializeDrone();
+		this.gamePane.addElement(newDrone);
 	}
 	
 	protected void setLeftKey(Action action) {
@@ -136,6 +141,8 @@ public class GameView implements Observer, ObserverPickup {
 		}
 		// To do: run a collect method on the "nearest" variable and
 		// delete it from the screen, update the model accordingly.
+		this.model.addPoints(nearest);
+		this.gamePane.updateScoreLabel();
 		this.model.movePlayer.setTarget(nearest);
 		System.out.println(nearest.x);
 		return nearest;
@@ -196,10 +203,10 @@ public class GameView implements Observer, ObserverPickup {
 		    		model.removeFromHash(observableState);
 		    	}
 		    	gamePane.removeElement(observableState);
+		    	gamePane.updateScoreLabel();
 				model.movePlayer.setTarget(null);
 		    }
 		});
-		
 	}
 	
 }

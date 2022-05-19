@@ -3,6 +3,7 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.event.ActionEvent;
 import mainGame.GameView;
 
 public class IncreaseRangePowerUp extends PowerUp{
@@ -49,4 +50,13 @@ public class IncreaseRangePowerUp extends PowerUp{
 	public int getCurrentRange() {
 		return this.currentRange;
 	}
+	
+	public void event() {
+		if (this.view.model.getScore() < this.getCost()) {
+			return;
+		}
+		this.changeCost();
+		this.view.model.movePlayer.setDestructionRange(currentRange);
+	}
+	
 }

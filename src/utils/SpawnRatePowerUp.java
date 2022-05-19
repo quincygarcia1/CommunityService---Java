@@ -50,4 +50,14 @@ public class SpawnRatePowerUp extends PowerUp {
 		return this.currentOffset;
 	}
 
+	@Override
+	public void event() {
+		// TODO Auto-generated method stub
+		if (this.view.model.getScore() < this.getCost()) {
+			return;
+		}
+		this.changeCost();
+		this.view.timer.changeOffset(currentOffset);
+	}
+
 }

@@ -43,5 +43,15 @@ public class DronePowerUp extends PowerUp{
 		setTitle();
 	}
 
+	@Override
+	public void event() {
+		// TODO Auto-generated method stub
+		if (this.view.model.getScore() < this.getCost()) {
+			return;
+		}
+		this.changeCost();
+		this.view.newDrone();
+	}
+
 
 }
