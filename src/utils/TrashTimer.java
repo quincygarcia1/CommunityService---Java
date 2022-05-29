@@ -1,11 +1,8 @@
-package mainGame;
+package utils;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import utils.Observable;
-import utils.Observer;
 
 public class TrashTimer extends Observable {
 

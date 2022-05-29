@@ -65,7 +65,6 @@ public class ShopPane extends GridPane{
 		} else {
 			button = SpawnRatePowerUp.getInstance(this.view);
 		}
-		button.setOnMouseClicked(e -> button.event());
 		HBox buttonBox = createCollection(Pos.CENTER_RIGHT, button, 100);
 		int currentRow = this.getRowCount();
 		this.add(descriptionBox, 0, currentRow);

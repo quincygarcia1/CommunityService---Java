@@ -17,6 +17,7 @@ import utils.Action;
 import utils.Observer;
 import utils.ObserverPickup;
 import utils.TrashList;
+import utils.TrashTimer;
 
 public class GameView implements Observer, ObserverPickup {
 	

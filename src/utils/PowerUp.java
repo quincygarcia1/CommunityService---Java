@@ -16,6 +16,7 @@ public abstract class PowerUp extends GameButton {
 		super(title, width, height, 20);
 		this.view = view;
 		this.cost = cost;
+		this.setOnMouseClicked(e -> this.event());
 	}
 	
 	public int getCost() {

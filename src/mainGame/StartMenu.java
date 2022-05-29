@@ -22,7 +22,7 @@ public class StartMenu extends GridPane{
 	}
 	
 	private void titling() {
-		Text title = Resources.getTitleText("Community Service");
+		Text title = Resources.getTitleText("Garbage Day");
 		HBox box = new HBox(title);
 		box.setAlignment(Pos.CENTER);
 		this.setVgap(10);
